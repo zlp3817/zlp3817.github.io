@@ -48,11 +48,9 @@
 <body>
     <div>
         <textarea id="input">straight bundle 
-            24-1
-            26-1
-            28-1
-            straight 13x4 
-            20-1 </textarea>
+            12
+            14
+            16</textarea>
         <div class="button">
             <input type='button' value='输出' onclick="OnOutput()"></input>
             <input type='button' value='更新' onclick="OnUpdate()"></input>
@@ -66,7 +64,7 @@
 <script>
     var hair_type = ['Bundle', 'Closure', 'Frontal', 'Wig'];
     var hair_texture = ['Straight', 'Body Wave', 'Loose Body Wave', 'Deep Wave', 'Water Wave', 'Curly', 'Loose Wave', 'Kinky Curly', 'Kinky Straight'];
-    var hair_color = ['Natural', '613'];
+    var hair_color = ['Natural', '613', 'blond'];
     var hair_category = ['4x4', '5x5', '6x6', '7x7', '13x4', '13x6', '360'];
     var hair_length = ['10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30'];
     var hair_weight = { 'Bundle': 110, 'Closure': 45, 'Frontal': 80, 'Wig': 225 };
@@ -188,60 +186,9 @@
             },
         }
     };
-    function similarity2number(s, t) {
-        var n = s.length, m = t.length, d = [];
-        var i, j, s_i, t_j, cost;
-        if (n == 0) return m;
-        if (m == 0) return n;
-        for (i = 0; i <= n; i++) {
-            d[i] = [];
-            d[i][0] = i;
-        }
-        for (j = 0; j <= m; j++) {
-            d[0][j] = j;
-        }
-        for (i = 1; i <= n; i++) {
-            s_i = s.charAt(i - 1);
-            for (j = 1; j <= m; j++) {
-                t_j = t.charAt(j - 1);
-                if (s_i == t_j) {
-                    cost = 0;
-                } else {
-                    cost = 1;
-                }
-                d[i][j] = self.minimum(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
-            }
-        }
-        return d[n][m];
-    }
-    //两个字符串的相似程度，并返回相似度百分比
-    function similarity2percent(s, t) {
-        var l = s.length > t.length ? s.length : t.length;
-        var d = self.similarity2number(s, t);
-        return (1 - d / l).toFixed(4);
-    }
-    function minimum(a, b, c) {
-        return a < b ? (a < c ? a : c) : (b < c ? b : c);
-    }
-    /**
- * 使用test方法实现模糊查询
- * @param  {Array}  list     原数组
- * @param  {String} keyWord  查询的关键词
- * @return {Array}           查询的结果
- */
-    function fuzzyQuery(list, keyWord) {
-        var reg = new RegExp(keyWord);
-        var arr = [];
-        for (var i = 0; i < list.length; i++) {
-            if (reg.test(list[i])) {
-                arr.push(list[i]);
-            }
-        }
-        return arr;
-    }
-    function split(str) { return str.split(separator).filter(Boolean); }
-    function trim(str) { return str.replace(/\s+/g, '').toLocaleLowerCase(); }
 
+    function trim(str) { return str.replace(/\s+/g, '').toLocaleLowerCase(); }
+    //构造信息
     function Hair(color, type, texture, category) {
         if (color == null) {
             this.color = hair_color[0];
@@ -294,12 +241,13 @@
             return hair_weight[this.type] * this.count();
         }
     }
-
+    //序列化
     function serialize(arrHair, shippingFee = 0, discount = 0, dicFee = []) {
         var output = '';
         var count = 0;
         var weight = 0;
         var totalAmount = 0;
+        var dicCount = new Array();
 
         for (const hair of arrHair) {
             if (null == hair.category) {
@@ -316,9 +264,20 @@
             }
             count += hair.count();
             weight += hair.weight();
+
+            if (dicCount.hasOwnProperty(hair.type)) {
+                dicCount[hair.type] += hair.count();
+            } else {
+                dicCount[hair.type] = hair.count();
+            }
         }
 
-        output += '[---total:' + count + '---weight:' + weight / 1000 + 'kg---]\n';
+        output += '[--Total:' + count;
+        for (var key in dicCount) {
+            output += ',' + key + ':' + dicCount[key];
+        }
+
+        output += '-Weight:' + weight / 1000 + 'kg--]\n';
 
         if (count > 0) {
             var otherFee = 0;
@@ -345,7 +304,7 @@
 
         return output;
     }
-
+    //反序列化
     function unserialize(str) {
         var arrHair = [];
         var dicFee = new Array();
@@ -354,22 +313,10 @@
         var text = str.split('[---')[0];
         var arrStr = text.match(/[^\r\n]+/g);
         for (const line of arrStr) {
-            var texture = find_hair(line, hair_texture);
-            if (texture == null) {
-            }
-
-            var type = find_hair(line, hair_type);
-            if (type != null) {
-            }
-
-            var category = find_hair(line, hair_category);
-            if (category != null) {
-            }
-
-            var color = find_hair(line, hair_color);
-            if (color != null) {
-                color = hair_color[0];
-            }
+            var texture = find_hair_keyword(line, hair_texture);
+            var type = find_hair_keyword(line, hair_type);
+            var category = find_hair_keyword(line, hair_category);
+            var color = find_hair_keyword(line, hair_color);
 
             if (texture != null) {
                 var hair = new Hair(color, type, texture, category);
@@ -413,8 +360,8 @@
 
         return [arrHair, shippingFee, discount, dicFee];
     }
-
-    function find_hair(text, list) {
+    //获取关键词
+    function find_hair_keyword(text, list) {
         var line = trim(text);
         for (const name of list) {
             var keyWord = trim(name);
@@ -425,36 +372,27 @@
 
         return null;
     }
-
-    function find_volume(text, list) {
-        var numArr = text.match(/\d+/g);
+    //获取尺寸和长度
+    function find_length_volume(text, list) {
+        var content = text;
+        for (var keyword of hair_category) {
+            content = content.replace(keyword, '');
+        }
+        var numArr = content.match(/\d+/g);
         if (numArr) {
-            var is_find = false;
             var length = 0;
             var num = 1;
             for (var len of numArr) {
                 if (list.indexOf(len) >= 0) {
                     length = len;
-                    is_find = true;
-                }
-            }
-
-            if (is_find) {
-                for (var len of numArr) {
-                    if (len < 10) {
-                        num = Number(len);
-                    }
+                } else if (len < 10) {
+                    num = Number(len);
                 }
             }
         }
-
-        if (length > 0) {
-            return [length, num];
-        }
-
-        return null;
+        return [length, num];
     }
-
+    //解析
     function parse(str) {
         var arrHair = [];
         var arrStr = str.match(/[^\r\n]+/g);
@@ -462,10 +400,13 @@
             if (line.length < 2) {
                 continue;
             }
-            var texture = find_hair(line, hair_texture);
-            var type = find_hair(line, hair_type);
-            var category = find_hair(line, hair_category);
-            var color = find_hair(line, hair_color);
+            var texture = find_hair_keyword(line, hair_texture);
+            var type = find_hair_keyword(line, hair_type);
+            var category = find_hair_keyword(line, hair_category);
+            var color = find_hair_keyword(line, hair_color);
+            if (color == hair_color[2]) {
+                color = hair_color[1];
+            }
 
             // console.log('format:', color, type, texture, category);
 
@@ -474,8 +415,8 @@
                 arrHair.push(hair);
             }
 
-            var volume = find_volume(line, hair_length)
-            if (volume != null) {
+            var volume = find_length_volume(line, hair_length)
+            if (volume[0] > 0) {
                 var length = volume[0];
                 var number = volume[1];
                 var hair = arrHair[arrHair.length - 1];
@@ -486,7 +427,7 @@
         }
         return serialize(arrHair);
     }
-
+    //输出
     function OnOutput() {
         document.getElementById('output').value = null;
         var text = document.getElementById('input').value;
@@ -496,12 +437,12 @@
         }
 
     }
-
+    //更新
     function OnUpdate() {
         var arrStr = unserialize(document.getElementById('output').value);
         document.getElementById('output').value = serialize(arrStr[0], arrStr[1], arrStr[2], arrStr[3]);
     }
-
+    //复制
     function OnCopy() {
         var copyText = document.getElementById('output').value;
         var textArea = document.createElement("textarea");
@@ -512,5 +453,4 @@
         textArea.remove();
     }
 </script>
-
 </html>

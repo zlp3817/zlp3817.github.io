@@ -1,1 +1,516 @@
-hello world
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<title></title>
+<style>
+    body {
+        width: 98%;
+        max-width: 600px;
+        height: 100%;
+        margin: 0 auto;
+        font-size: 1.5rem;
+    }
+
+    textarea {
+        width: 100%;
+        min-height: 400px;
+        border: 1px solid grey;
+        word-break: break-word;
+        white-space: pre-wrap;
+        border-radius: 8px;
+        margin-top: 20px;
+    }
+
+    .button {
+        text-align: center;
+        padding: 5px 0;
+    }
+
+    input[type="button"] {
+        width: 180px;
+        height: 38px;
+        background-color: #0095f6;
+        border: none;
+        color: white;
+        text-align: center;
+        border-radius: 2px;
+        outline: none;
+    }
+
+    input[type="button"]:active {
+        background-color: rgba(var(--d69, 0, 149, 246), .7);
+        opacity: 1;
+    }
+</style>
+</head>
+
+
+<body>
+    <div>
+        <textarea id="input">straight bundle 
+            24-1
+            26-1
+            28-1
+            straight 13x4 
+            20-1 </textarea>
+        <div class="button">
+            <input type='button' value='输出' onclick="OnOutput()"></input>
+            <input type='button' value='更新' onclick="OnUpdate()"></input>
+            <input type='button' value='复制' onclick="OnCopy()"></input>
+        </div>
+        <textarea id="output" style="display:none;"></textarea>
+    </div>
+
+    <!-- <input type="button" class="copy_submit" onclick="document.forms['merge_form'].notes1.value += '\n' + document.forms['merge_form'].notes2.value;" value="<< Copy" /> -->
+</body>
+<script>
+    var hair_type = ['Bundle', 'Closure', 'Frontal', 'Wig'];
+    var hair_texture = ['Straight', 'Body Wave', 'Loose Body Wave', 'Deep Wave', 'Water Wave', 'Curly', 'Loose Wave', 'Kinky Curly', 'Kinky Straight'];
+    var hair_color = ['Natural', '613'];
+    var hair_category = ['4x4', '5x5', '6x6', '7x7', '13x4', '13x6', '360'];
+    var hair_length = ['10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30'];
+    var hair_weight = { 'Bundle': 110, 'Closure': 45, 'Frontal': 80, 'Wig': 225 };
+    var _bundle_price = { '10': 18, '12': 22, '14': 26, '16': 30, '18': 34, '20': 38, '22': 44, '24': 49, '26': 57, '28': 62, '30': 66 };
+    var _bundle_price2 = { '10': 19, '12': 23, '14': 27, '16': 31, '18': 35, '20': 39, '22': 45, '24': 50, '26': 58, '28': 63, '30': 67 };
+    var _613_bundle_price = { '10': 19, '12': 23, '14': 27, '16': 31, '18': 35, '20': 43, '22': 49, '24': 54, '26': 59, '28': 63, '30': 67 };
+    var _4x4_price = { '10': 29, '12': 33, '14': 31, '16': 62, '18': 65, '20': 70 };
+    var _5x5_price = { '10': 47, '12': 51, '14': 73, '16': 81, '18': 91, '20': 96 };
+    var _13x4_price = { '10': 48, '12': 53, '14': 96, '16': 109, '18': 116, '20': 124 };
+    var _13x6_price = { '10': 61, '12': 67, '14': 77, '16': 0, '18': 0, '20': 0 };
+    var _360_price = { '10': 76, '12': 86, '14': 95, '16': 110, '18': 120, '20': 124 };
+    var _5x5_hd_price = { '10': 0, '12': 0, '14': 76, '16': 82, '18': 87, '20': 90 };
+    var _613_4x4_price = { '10': 51, '12': 56, '14': 77, '16': 82, '18': 87, '20': 98 };
+    var _613_5x5_price = { '10': 70, '12': 77, '14': 82, '16': 90, '18': 98, '20': 106 };
+    var _613_13x4_price = { '10': 98, '12': 104, '14': 116, '16': 129, '18': 137, '20': 149 };
+    var hair_price = {
+        'Natural':
+        {
+            'Bundle':
+            {
+                'Straight': _bundle_price,
+                'Body Wave': _bundle_price,
+                'Loose Body Wave': _bundle_price2,
+                'Deep Wave': _bundle_price2,
+                'Water Wave': _bundle_price2,
+                'Curly': _bundle_price2,
+                'Loose Wave': _bundle_price2,
+                'Kinky Curly': _bundle_price2,
+                'Kinky Straight': _bundle_price2,
+
+            },
+            'Closure':
+            {
+                '4x4':
+                {
+                    'Straight': _4x4_price,
+                    'Body Wave': _4x4_price,
+                    'Loose Body Wave': _4x4_price,
+                    'Deep Wave': _4x4_price,
+                    'Water Wave': _4x4_price,
+                    'Curly': _4x4_price,
+                    'Loose Wave': _4x4_price,
+                    'Kinky Curly': _4x4_price,
+                    'Kinky Straight': _4x4_price,
+                },
+                '5x5':
+                {
+                    'Straight': _5x5_price,
+                    'Body Wave': _5x5_price,
+                    'Loose Body Wave': _5x5_price,
+                    'Deep Wave': _5x5_price,
+                    'Water Wave': _5x5_price,
+                    'Curly': _5x5_price,
+                    'Loose Wave': _5x5_price,
+                    'Kinky Curly': _5x5_price,
+                    'Kinky Straight': _5x5_price,
+                }
+            },
+            'Frontal':
+            {
+                '13x4':
+                {
+                    'Straight': _13x4_price,
+                    'Body Wave': _13x4_price,
+                    'Loose Body Wave': _13x4_price,
+                    'Deep Wave': _13x4_price,
+                    'Water Wave': _13x4_price,
+                    'Curly': _13x4_price,
+                    'Loose Wave': _13x4_price,
+                    'Kinky Curly': _13x4_price,
+                    'Kinky Straight': _13x4_price,
+                },
+                '13x6':
+                {
+                    'Straight': _13x6_price,
+                    'Body Wave': _13x6_price,
+                    'Loose Body Wave': _13x6_price,
+                    'Deep Wave': _13x6_price,
+                    'Water Wave': _13x6_price,
+                    'Curly': _13x6_price,
+                    'Loose Wave': _13x6_price,
+                    'Kinky Curly': _13x6_price,
+                    'Kinky Straight': _13x6_price,
+                }
+            },
+            'Wig':
+            {
+
+            },
+        },
+        '613':
+        {
+            'Bundle':
+            {
+                'Straight': _613_bundle_price,
+                'Body Wave': _613_bundle_price,
+
+            },
+            'Closure':
+            {
+                '4x4':
+                {
+                    'Straight': _613_4x4_price,
+                    'Body Wave': _613_4x4_price,
+                },
+                '5x5':
+                {
+                    'Straight': _613_5x5_price,
+                    'Body Wave': _613_5x5_price,
+                }
+            },
+            'Frontal':
+            {
+                '13x4':
+                {
+                    'Straight': _613_13x4_price,
+                    'Body Wave': _613_13x4_price,
+                }
+            },
+        }
+    };
+    function similarity2number(s, t) {
+        var n = s.length, m = t.length, d = [];
+        var i, j, s_i, t_j, cost;
+        if (n == 0) return m;
+        if (m == 0) return n;
+        for (i = 0; i <= n; i++) {
+            d[i] = [];
+            d[i][0] = i;
+        }
+        for (j = 0; j <= m; j++) {
+            d[0][j] = j;
+        }
+        for (i = 1; i <= n; i++) {
+            s_i = s.charAt(i - 1);
+            for (j = 1; j <= m; j++) {
+                t_j = t.charAt(j - 1);
+                if (s_i == t_j) {
+                    cost = 0;
+                } else {
+                    cost = 1;
+                }
+                d[i][j] = self.minimum(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+            }
+        }
+        return d[n][m];
+    }
+    //两个字符串的相似程度，并返回相似度百分比
+    function similarity2percent(s, t) {
+        var l = s.length > t.length ? s.length : t.length;
+        var d = self.similarity2number(s, t);
+        return (1 - d / l).toFixed(4);
+    }
+    function minimum(a, b, c) {
+        return a < b ? (a < c ? a : c) : (b < c ? b : c);
+    }
+    /**
+ * 使用test方法实现模糊查询
+ * @param  {Array}  list     原数组
+ * @param  {String} keyWord  查询的关键词
+ * @return {Array}           查询的结果
+ */
+    function fuzzyQuery(list, keyWord) {
+        var reg = new RegExp(keyWord);
+        var arr = [];
+        for (var i = 0; i < list.length; i++) {
+            if (reg.test(list[i])) {
+                arr.push(list[i]);
+            }
+        }
+        return arr;
+    }
+    function split(str) { return str.split(separator).filter(Boolean); }
+    function trim(str) { return str.replace(/\s+/g, '').toLocaleLowerCase(); }
+
+    function Hair(color, type, texture, category) {
+        if (color == null) {
+            this.color = hair_color[0];
+        } else {
+            this.color = color;
+        }
+
+        if (type == null) {
+            if (category == hair_category[0] || category == hair_category[1] || category == hair_category[2] || category == hair_category[3]) {
+                this.type = hair_type[1];
+            } else if (category == hair_category[4] || category == hair_category[5] || category == hair_category[6]) {
+                this.type = hair_type[2];
+            }
+        } else {
+            this.type = type;
+        }
+
+        if (category == null) {
+            if (hair_type[1] == type) {
+                this.category = hair_category[0];
+            } else if (hair_type[2] == type) {
+                this.category = hair_category[4];
+            }
+        } else {
+            this.category = category;
+        }
+
+
+        // this.color = color;
+        this.texture = texture;
+        // this.type = type;
+        // this.category = category;
+        // console.log('Hair:', this.color, this.type, this.texture, this.category);
+
+        this.volume = new Array();
+        this.price = function (length) {
+            if (null == this.category) {
+                return hair_price[this.color][this.type][this.texture][length];
+            }
+            return hair_price[this.color][this.type][this.category][this.texture][length];
+        };
+        this.count = function () {
+            var count = 0;
+            for (var length in this.volume) {
+                count += this.volume[length][1];
+            }
+            return count;
+        }
+        this.weight = function () {
+            return hair_weight[this.type] * this.count();
+        }
+    }
+
+    function serialize(arrHair, shippingFee = 0, discount = 0, dicFee = []) {
+        var output = '';
+        var count = 0;
+        var weight = 0;
+        var totalAmount = 0;
+
+        for (const hair of arrHair) {
+            if (null == hair.category) {
+                output += hair.texture + ' ' + hair.type + ' ' + hair.color + ' Color\n';
+            } else {
+                output += hair.texture + ' ' + hair.category + ' ' + hair.type + ' ' + hair.color + ' Color\n';
+            }
+            var dic = hair.volume;
+            for (var length in dic) {
+                var price = dic[length][0];
+                var volume = dic[length][1];
+                output += volume + '-' + length + '":$' + price + 'x' + volume + '=$' + price * volume + '\n';
+                totalAmount += price * volume;
+            }
+            count += hair.count();
+            weight += hair.weight();
+        }
+
+        output += '[---total:' + count + '---weight:' + weight / 1000 + 'kg---]\n';
+
+        if (count > 0) {
+            var otherFee = 0;
+            for (var key in dicFee) {
+                output += key + '$' + dicFee[key] + '\n';
+                otherFee += dicFee[key];
+            }
+
+            if (shippingFee == 0) {
+                shippingFee = 25 + Math.floor(weight / 500) * 10;
+            }
+            output += 'Shipping fee:$' + shippingFee + '\n';
+            var paypalFee = (totalAmount + shippingFee + otherFee) * 0.05;
+            paypalFee = Number(paypalFee.toFixed(2));
+            output += 'PayPal fee:$' + paypalFee + '\n';
+            if (discount == 0) {
+                discount = paypalFee % 1;
+                discount = 3 + Number(discount.toFixed(2));
+            }
+            output += 'Discount:$' + discount + '\n';
+            totalAmount = totalAmount + otherFee + shippingFee + paypalFee - discount;
+            output += 'The total best payment is:$' + totalAmount.toFixed(2) + '\n';
+        }
+
+        return output;
+    }
+
+    function unserialize(str) {
+        var arrHair = [];
+        var dicFee = new Array();
+        var shippingFee = 0;
+        var discount = 0;
+        var text = str.split('[---')[0];
+        var arrStr = text.match(/[^\r\n]+/g);
+        for (const line of arrStr) {
+            var texture = find_hair(line, hair_texture);
+            if (texture == null) {
+            }
+
+            var type = find_hair(line, hair_type);
+            if (type != null) {
+            }
+
+            var category = find_hair(line, hair_category);
+            if (category != null) {
+            }
+
+            var color = find_hair(line, hair_color);
+            if (color != null) {
+                color = hair_color[0];
+            }
+
+            if (texture != null) {
+                var hair = new Hair(color, type, texture, category);
+                arrHair.push(hair);
+            } else {
+                var arrVolume = line.split(':');
+                var numArr = arrVolume[0].match(/\d+/g);
+                var volume = numArr[0];
+                var length = numArr[1];
+                var priceArr = arrVolume[1].match(/\d+/g);
+                var price = priceArr[0];
+                var hair = arrHair[arrHair.length - 1];
+                hair.volume[length] = [Number(price), Number(volume)];
+            }
+        }
+
+        text = str.split('---]')[1];
+        arrStr = text.match(/[^\r\n]+/g);
+        var isOtrherFee = true;
+        for (const line of arrStr) {
+            if (line.length < 2) {
+                continue;
+            }
+            if (line.indexOf('Shipping fee') >= 0) {
+                isOtrherFee = false;
+                var numArr = line.match(/\d+/g);
+                shippingFee = Number(numArr[0]);
+            } else if (line.indexOf('Discount') >= 0) {
+                var numArr = line.match(/\d+\.\d+/g)
+                discount = Number(numArr[0]);
+                break;
+            } else {
+                if (isOtrherFee) {
+                    var numArr = line.split('$');
+                    dicFee[numArr[0]] = Number(numArr[1]);
+                }
+            }
+        }
+
+        console.log(arrHair, shippingFee, discount, dicFee);
+
+        return [arrHair, shippingFee, discount, dicFee];
+    }
+
+    function find_hair(text, list) {
+        var line = trim(text);
+        for (const name of list) {
+            var keyWord = trim(name);
+            if (line.indexOf(keyWord) >= 0) {
+                return name;
+            }
+        }
+
+        return null;
+    }
+
+    function find_volume(text, list) {
+        var numArr = text.match(/\d+/g);
+        if (numArr) {
+            var is_find = false;
+            var length = 0;
+            var num = 1;
+            for (var len of numArr) {
+                if (list.indexOf(len) >= 0) {
+                    length = len;
+                    is_find = true;
+                }
+            }
+
+            if (is_find) {
+                for (var len of numArr) {
+                    if (len < 10) {
+                        num = Number(len);
+                    }
+                }
+            }
+        }
+
+        if (length > 0) {
+            return [length, num];
+        }
+
+        return null;
+    }
+
+    function parse(str) {
+        var arrHair = [];
+        var arrStr = str.match(/[^\r\n]+/g);
+        for (const line of arrStr) {
+            if (line.length < 2) {
+                continue;
+            }
+            var texture = find_hair(line, hair_texture);
+            var type = find_hair(line, hair_type);
+            var category = find_hair(line, hair_category);
+            var color = find_hair(line, hair_color);
+
+            // console.log('format:', color, type, texture, category);
+
+            if (texture != null) {
+                var hair = new Hair(color, type, texture, category);
+                arrHair.push(hair);
+            }
+
+            var volume = find_volume(line, hair_length)
+            if (volume != null) {
+                var length = volume[0];
+                var number = volume[1];
+                var hair = arrHair[arrHair.length - 1];
+                var price = hair.price(length);
+                hair.volume[length] = [price, number];
+            }
+
+        }
+        return serialize(arrHair);
+    }
+
+    function OnOutput() {
+        document.getElementById('output').value = null;
+        var text = document.getElementById('input').value;
+        if (text.length > 0) {
+            document.getElementById('output').value = parse(text);
+            document.getElementById('output').style.display = "block";
+        }
+
+    }
+
+    function OnUpdate() {
+        var arrStr = unserialize(document.getElementById('output').value);
+        document.getElementById('output').value = serialize(arrStr[0], arrStr[1], arrStr[2], arrStr[3]);
+    }
+
+    function OnCopy() {
+        var copyText = document.getElementById('output').value;
+        var textArea = document.createElement("textarea");
+        textArea.value = copyText;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("Copy");
+        textArea.remove();
+    }
+</script>
+
+</html>

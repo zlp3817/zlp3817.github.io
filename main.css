@@ -152,7 +152,7 @@ li.active {
         border-radius: 0px;
         box-shadow: 0 2px 2px rgb(0 0 0 / 22%);
     }
-    .button_group {
+    .button {
         display: flex;
         width: 100%;
         text-align: center;

@@ -1,4 +1,4 @@
-var hair_keyword = ['natural color', '613 color', 'shipping fee:', 'discont:', 'paypal fee:', 'making fee:'];
+var hair_keyword = ['natural color', '613 color', 'shipping fee:', 'discount:', 'paypal fee:', 'making fee:'];
 var hair_type = ['bundle', 'closure', 'frontal', 'wig'];
 var hair_texture = ['straight', 'body wave', 'loose body wave', 'deep wave', 'water wave', 'curly', 'loose wave', 'kinky curly', 'kinky straight'];
 var hair_color = ['natural', '613', 'blond'];
@@ -241,10 +241,36 @@ function serialize(arrHair, dicFee = []) {
     console.log('weight:', weight / 1000, 'kg');
 
     if (count > 0) {
-        console.log(dicFee);
-        console.log(Object.keys(dicFee).length);
+        console.log('dicFee:', dicFee);
         if (Object.keys(dicFee).length > 0) {
             var otherFee = 0;
+            for (var key in dicFee) {
+                if (key.indexOf('discount') >= 0 || key.indexOf('paypal') >= 0) {
+                    continue;
+                } else {
+                    otherFee += dicFee[key];
+                }
+            }
+
+            var paypalFee = (totalAmount + otherFee) * 0.05;
+            for (var key in dicFee) {
+                if (key.indexOf('paypal') >= 0) {
+                    dicFee[key] = Number(paypalFee.toFixed(2));
+                    console.log('paypal fee:', dicFee[key]);
+                    break;
+                }
+            }
+
+            for (var key in dicFee) {
+                if (key.indexOf('discount') >= 0) {
+                    var discount = Math.floor(dicFee[key]) + paypalFee % 1;
+                    dicFee[key] = Number(discount.toFixed(2));
+                    console.log('discount fee:', dicFee[key]);
+                    break;
+                }
+            }
+
+            otherFee = 0;
             for (var key in dicFee) {
                 output += key + '$' + dicFee[key] + '\n';
                 if (key.indexOf('discount') >= 0) {
@@ -253,6 +279,7 @@ function serialize(arrHair, dicFee = []) {
                     otherFee += dicFee[key];
                 }
             }
+
             totalAmount = totalAmount + otherFee;
         } else {
             shippingFee = 25 + Math.floor(weight / 500) * 10;

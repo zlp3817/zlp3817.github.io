@@ -147,6 +147,7 @@ li.active {
     }
     .textarea {
         width: 100%;
+        min-height: 250px;
         border-top: 1px solid rgba(0, 0, 0, 0.12);
         /* box-shadow: none; */
         border-radius: 0px;

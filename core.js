@@ -140,22 +140,9 @@ var hair_price = {
         },
     }
 };
-
-$('.textarea').textcomplete([{
-    match: /(^|\b)(\w{2,})$/,
-    // match: /(^|\b)(([a-z]{1,})|(\d{2,}))$/,
-    search: function (term, callback) {
-        var words = hair_type.concat(hair_texture).concat(hair_color).concat(closure_category).concat(frontal_category).concat(hair_keyword);
-        callback($.map(words, function (word) {
-            return word.indexOf(term) === 0 ? word : null;
-        }));
-    },
-    replace: function (word) {
-        return word + ' ';
-    }
-}]);
-
-function trim(str) { return str.replace(/\s+/g, '').toLocaleLowerCase(); }
+function trim(str) {
+    return str.replace(/\s+/g, '').toLocaleLowerCase();
+}
 //构造信息
 function Hair(color, type, texture, category) {
     if (color == null) {
@@ -243,12 +230,15 @@ function serialize(arrHair, dicFee = []) {
     }
 
     console.log('totalAmount: ', totalAmount)
-    output += '[--total: ' + count;
+    output += '[--';
+    output += 'total: ' + count;
     for (var key in dicCount) {
         output += ', ' + dicCount[key] + ' ' + key;
     }
 
-    output += '-weight: ' + weight / 1000 + 'kg--]\n';
+    // output += '-weight: ' + weight / 1000 + 'kg--]\n';
+    output += '--]\n';
+    console.log('weight:', weight / 1000, 'kg');
 
     if (count > 0) {
         console.log(dicFee);
@@ -279,6 +269,7 @@ function serialize(arrHair, dicFee = []) {
 
     }
 
+    output += '\n';
     output += 'the total best payment is: $' + totalAmount.toFixed(2) + '\n';
 
     return output;
@@ -410,41 +401,8 @@ function parse(str) {
     }
     return serialize(arrHair);
 }
-//输出
-function OnOutput() {
-    document.getElementById('output').innerText = null;
-    var text = document.getElementById('input').innerText;
-    console.log('text:', text);
-    if (text.length > 0) {
-        document.getElementById('output').innerText = parse(text);
-        document.getElementById('output').style.visibility = 'visible';
-    }
 
-}
-//更新
-function OnUpdate() {
-    var arrStr = unserialize(document.getElementById('output').innerText);
-    document.getElementById('output').innerText = serialize(arrStr[0], arrStr[1]);
-}
-//复制
-function OnCopy() {
-    var copyText = document.getElementById('output').innerText;
-    if (copyText.length > 0) {
-        var textArea = document.createElement("textarea");
-        textArea.value = copyText;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand("Copy");
-        textArea.remove();
-        $('<div>').appendTo('body').addClass('alert').html('已复制').show().delay(1200).fadeOut();
-    }
-
-    // $('<div>').appendTo('body').addClass('alert').html('已复制').show();
-}
-// $(document).keypress("enter",function(e) {
-//     OnOutput();
-// }); 
-window.onload = function () {
+function init() {
     var pwd_md5 = getCookie('pwd');
     if (pwd_md5 == null) {
         var pwd = prompt("password", "");
@@ -460,14 +418,14 @@ window.onload = function () {
         location.reload();
     }
 }
-//设置cookie
+//set cookie
 function setCookie(name, value, day = 120) {
     var date = new Date();
     date.setDate(date.getDate() + day);
     document.cookie = name + '=' + value + ';expires=' + date;
 };
 
-//获取cookie
+//get cookie
 function getCookie(name) {
     var reg = RegExp(name + '=([^;]+)');
     var arr = document.cookie.match(reg);

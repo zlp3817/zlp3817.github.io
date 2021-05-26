@@ -11,6 +11,7 @@
 <script src="core.js"></script>
 <title></title>
 </head>
+
 <body>
     <div id="wrap">
         <div id="input" class="textarea" contenteditable="plaintext-only"></div>
@@ -22,4 +23,53 @@
         <div id="output" class="textarea" contenteditable="plaintext-only"></div>
     </div>
 </body>
+<script>
+    window.onload = function () {
+        init();
+    }
+
+    $('.textarea').textcomplete([{
+        match: /(^|\b)(\w{2,})$/,
+        // match: /(^|\b)(([a-z]{1,})|(\d{2,}))$/,
+        search: function (term, callback) {
+            var words = hair_type.concat(hair_texture).concat(hair_color).concat(closure_category).concat(frontal_category).concat(hair_keyword);
+            callback($.map(words, function (word) {
+                return word.indexOf(term) === 0 ? word : null;
+            }));
+        },
+        replace: function (word) {
+            return word + ' ';
+        }
+    }]);
+    //输出
+    function OnOutput() {
+        document.getElementById('output').innerText = null;
+        var text = document.getElementById('input').innerText;
+        console.log('text:', text);
+        if (text.length > 0) {
+            document.getElementById('output').innerText = parse(text);
+            document.getElementById('output').style.visibility = 'visible';
+        }
+
+    }
+    //更新
+    function OnUpdate() {
+        var arrStr = unserialize(document.getElementById('output').innerText);
+        document.getElementById('output').innerText = serialize(arrStr[0], arrStr[1]);
+    }
+    //复制
+    function OnCopy() {
+        var copyText = document.getElementById('output').innerText;
+        if (copyText.length > 0) {
+            var textArea = document.createElement("textarea");
+            textArea.value = copyText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("Copy");
+            textArea.remove();
+            $('<div>').appendTo('body').addClass('alert').html('已复制').show().delay(1200).fadeOut();
+        }
+    }
+</script>
+
 </html>

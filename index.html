@@ -8,7 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.textcomplete/1.8.5/jquery.textcomplete.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.2/jquery-ui.min.js"></script>
 <script src="https://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.min.js"></script>
-<script src="core.js"></script>
+<script src="main.js"></script>
 <title></title>
 </head>
 
@@ -29,7 +29,7 @@
     }
 
     $('.textarea').textcomplete([{
-        match: /(^|\b)(\w{2,})$/,
+        match: /(^|\b)(\w{1,})$/,
         // match: /(^|\b)(([a-z]{1,})|(\d{2,}))$/,
         search: function (term, callback) {
             var words = hair_type.concat(hair_texture).concat(hair_color).concat(closure_category).concat(frontal_category).concat(hair_keyword);

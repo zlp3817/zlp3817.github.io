@@ -1,4 +1,4 @@
-var hair_keyword = ['color', 'shipping fee:', 'discont:', 'paypal fee:', 'making fee:'];
+var hair_keyword = ['natural color', '613 color', 'shipping fee:', 'discont:', 'paypal fee:', 'making fee:'];
 var hair_type = ['bundle', 'closure', 'frontal', 'wig'];
 var hair_texture = ['straight', 'body wave', 'loose body wave', 'deep wave', 'water wave', 'curly', 'loose wave', 'kinky curly', 'kinky straight'];
 var hair_color = ['natural', '613', 'blond'];

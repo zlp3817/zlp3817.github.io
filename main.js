@@ -224,7 +224,7 @@ function find_hair_keyword(text, list) {
     }
 
     if (arrName.length == 1) {
-        return arrName[0];
+        return arrName[0]
     } else if (arrName.length > 1) {
         console.log(arrName);
         return arrName.sort(function (a, b) {

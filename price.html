@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+<script src="common.js"></script>
+<title>Pricelist</title>
+<style>
+    table {
+        font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+        border-collapse: collapse;
+        margin: 20px 20px 0px;
+    }
+
+    table td, th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        min-width: 100px;
+        max-width: 400px;
+        text-align: center;
+        /* margin: 0px; */
+
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    table tr:hover {
+        background-color: #ddd;
+    }
+
+    table th {
+        padding-top: 10px;
+        background-color: #0095f6;
+        color: white;
+    }
+
+    .nav {
+        display: flex;
+        /* box-shadow: 0 2px 10px rgb(0 0 0 / 5%); */
+        border-bottom: 1px solid #ebebeb;
+        padding-left: 20px;
+    }
+
+    button {
+        width: 100px;
+        font-size: 1rem;
+        font-weight: 800;
+        /* font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif; */
+        background-color: #fff;
+        border: none;
+        padding: 17px 12px 11px 10px;
+        color: #5f6368;
+        border-bottom: 3px solid #fff;
+        text-align: left;
+    }
+
+    /* button:focus { */
+    .checked {
+        border-color: 1px #fff;
+        color: #1a73e8;
+        border-bottom: 3px solid #1a73e8;
+    }
+
+    /*在小于800 像素的屏幕，微小屏幕，更低分辨率的手机*/
+
+@media (max-width: 800px) {
+    table {
+        margin: 10px 0px 0px;
+    }
+
+    table td, th {
+        min-width: 100px;
+    }
+
+    .nav {
+        padding-left: 0px;
+    }
+}
+</style>
+</head>
+<header style="width: 100%;">
+    <div class="nav">
+        <button id="bundle" onclick="onTab(0)">BUNDLE</button>
+        <button id="closure" onclick="onTab(1)">CLOSURE</button>
+        <button id="frontal" onclick="onTab(2)">FRONTAL</button>
+        <button id="wig" onclick="onTab(3)">WIG</button>
+    </div>
+</header>
+
+<body>
+    <table id="table">
+        <thead>
+            <tr></tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</body>
+<script>
+    function addHeader(table, arrStr) {
+        var thead = table.tHead.rows[0];
+        for (var str of arrStr) {
+            var th = document.createElement('th');
+            th.innerText = str;
+            thead.appendChild(th);
+        }
+    }
+
+    function addRow(table, arrStr) {
+        // console.log(arrStr);
+        var tbody = table.tBodies[0];
+        var row = document.createElement("tr");
+        for (var str of arrStr) {
+            var td = document.createElement("td");
+            td.innerText = str;
+            row.appendChild(td);
+        }
+        tbody.appendChild(row);
+    }
+
+    function clearTable(table) {
+        var tbody = table.tBodies[0];
+        while (tbody.rows.length > 0) {
+            tbody.deleteRow(0);
+        }
+        var thead = table.tHead.rows[0];
+        while (thead.cells.length > 0) {
+            thead.deleteCell(0);
+        }
+    }
+
+    function onTab(i) {
+        $("#bundle").removeClass("checked");
+        $("#closure").removeClass("checked");
+        $("#frontal").removeClass("checked");
+        $("#wig").removeClass("checked");
+
+        switch (i) {
+            case 0: {
+                onBundle();
+            } break;
+            case 1: {
+                onClosure();
+            } break;
+            case 2: {
+                onFrontal();
+            } break;
+            case 3: {
+                onWig();
+            } break;
+        }
+
+    }
+    function onBundle() {
+        $("#bundle").addClass("checked");
+        var table = document.getElementById('table');
+        clearTable(table);
+        addHeader(table, ['Length', 'Natural Color\n\n(ST, BW)', 'Natural Color\n\n(LW, Curly, DW)', '613 Color\n\n(ST, BW)']);
+        for (var key in bundle_price) {
+            addRow(table, [key + '"', '$' + bundle_price[key], '$' + bundle_price2[key], '$' + _613_bundle_price[key]]);
+        }
+    }
+
+    function onClosure() {
+        $("#closure").addClass("checked");
+        var table = document.getElementById('table');
+        clearTable(table);
+        addHeader(table, ['Length', 'Natural Color\n\n(ST, BW, LW, DW, Curly, KC)\n4x4 Lace Closure', 'Natural Color\n\n(ST, BW, LW, DW Curly)\n5x5 Lace Closure', 'Natural Color\n\n(ST, BW, LW, DW Curly)\nHD 5x5 Lace Closure', '613 Color\n\n(ST, BW)\n4x4 Lace Closure', '613 Color\n\n(ST, BW)\n5x5 Lace Closure']);
+        for (var key in _4x4_price) {
+            addRow(table, [key + '"', '$' + _4x4_price[key], '$' + _5x5_price[key], '$' + hd_5x5_price[key], '$' + _613_4x4_price[key], '$' + _613_5x5_price[key]]);
+        }
+    }
+
+    function onFrontal() {
+        $("#frontal").addClass("checked");
+        var table = document.getElementById('table');
+        clearTable(table);
+        addHeader(table, ['Length', 'Natural Color\n\n(ST, BW, LW, DW, Curly, KC)\n13x4 Lace Frontal', 'Natural Color\n\n(ST, BW, LW, DW, Curly, KC)\n13x6 Lace Frontal', 'Natural Color\n\n(ST, BW, LW, DW, Curly, KC)\n360 Lace Frontal', '613 Color\n\n(ST, BW)\n13x4 Lace Frontal']);
+        for (var key in _13x4_price) {
+            addRow(table, [key + '"', '$' + _13x4_price[key], '$' + _13x6_price[key], '$' + _360_price[key], '$' + _613_13x4_price[key]]);
+        }
+    }
+
+    function onWig() {
+        $("#wig").addClass("checked");
+        var table = document.getElementById('table');
+        clearTable(table);
+    }
+
+    window.onload = function () {
+        onTab(0);
+    }
+</script>
+
+</html>

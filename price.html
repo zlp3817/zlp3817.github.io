@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
     content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
 <script src="common.js"></script>
 <title>Pricelist</title>
 <style>
@@ -13,7 +13,8 @@
         margin: 20px 20px 0px;
     }
 
-    table td, th {
+    table td,
+    th {
         border: 1px solid #ddd;
         padding: 8px;
         min-width: 100px;
@@ -66,19 +67,20 @@
 
     /*在小于800 像素的屏幕，微小屏幕，更低分辨率的手机*/
 
-@media (max-width: 800px) {
-    table {
-        margin: 10px 0px 0px;
-    }
+    @media (max-width: 800px) {
+        table {
+            margin: 10px 0px 0px;
+        }
 
-    table td, th {
-        min-width: 100px;
-    }
+        table td,
+        th {
+            min-width: 100px;
+        }
 
-    .nav {
-        padding-left: 0px;
+        .nav {
+            padding-left: 0px;
+        }
     }
-}
 </style>
 </head>
 <header style="width: 100%;">
@@ -168,9 +170,21 @@
         $("#closure").addClass("checked");
         var table = document.getElementById('table');
         clearTable(table);
-        addHeader(table, ['Length', 'Natural Color\n\n(ST, BW, LW, DW, Curly, KC)\n4x4 Lace Closure', 'Natural Color\n\n(ST, BW, LW, DW Curly)\n5x5 Lace Closure', 'Natural Color\n\n(ST, BW, LW, DW Curly)\nHD 5x5 Lace Closure', '613 Color\n\n(ST, BW)\n4x4 Lace Closure', '613 Color\n\n(ST, BW)\n5x5 Lace Closure']);
+        addHeader(table, ['Length',
+            'Natural Color\n\n(ST, BW, LW, DW, Curly, KC)\n4x4 Lace Closure',
+            'Natural Color\n\n(ST, BW, LW, DW, Curly, KC)\nHD 4x4 Lace Closure',
+            'Natural Color\n\n(ST, BW, LW, DW Curly)\n5x5 Lace Closure',
+            'Natural Color\n\n(ST, BW, LW, DW Curly)\nHD 5x5 Lace Closure',
+            '613 Color\n\n(ST, BW)\n4x4 Lace Closure',
+            '613 Color\n\n(ST, BW)\n5x5 Lace Closure']);
         for (var key in _4x4_price) {
-            addRow(table, [key + '"', '$' + _4x4_price[key], '$' + _5x5_price[key], '$' + hd_5x5_price[key], '$' + _613_4x4_price[key], '$' + _613_5x5_price[key]]);
+            addRow(table, [key + '"',
+            '$' + _4x4_price[key],
+            '$' + hd_4x4_price[key],
+            '$' + _5x5_price[key],
+            '$' + hd_5x5_price[key],
+            '$' + _613_4x4_price[key],
+            '$' + _613_5x5_price[key]]);
         }
     }
 
@@ -178,9 +192,19 @@
         $("#frontal").addClass("checked");
         var table = document.getElementById('table');
         clearTable(table);
-        addHeader(table, ['Length', 'Natural Color\n\n(ST, BW, LW, DW, Curly, KC)\n13x4 Lace Frontal', 'Natural Color\n\n(ST, BW, LW, DW, Curly, KC)\n13x6 Lace Frontal', 'Natural Color\n\n(ST, BW, LW, DW, Curly, KC)\n360 Lace Frontal', '613 Color\n\n(ST, BW)\n13x4 Lace Frontal']);
+        addHeader(table, ['Length',
+            'Natural Color\n\n(ST, BW, LW, DW, Curly, KC)\n13x4 Lace Frontal',
+            'Natural Color\n\n(ST, BW, LW, DW, Curly, KC)\nHD 13x4 Lace Frontal',
+            'Natural Color\n\n(ST, BW, LW, DW, Curly, KC)\n13x6 Lace Frontal',
+            'Natural Color\n\n(ST, BW, LW, DW, Curly, KC)\n360 Lace Frontal',
+            '613 Color\n\n(ST, BW)\n13x4 Lace Frontal']);
         for (var key in _13x4_price) {
-            addRow(table, [key + '"', '$' + _13x4_price[key], '$' + _13x6_price[key], '$' + _360_price[key], '$' + _613_13x4_price[key]]);
+            addRow(table, [key + '"',
+            '$' + _13x4_price[key],
+            '$' + hd_13x4_price[key],
+            '$' + _13x6_price[key],
+            '$' + _360_price[key],
+            '$' + _613_13x4_price[key]]);
         }
     }
 

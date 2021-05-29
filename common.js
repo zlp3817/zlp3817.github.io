@@ -157,7 +157,7 @@ const hair_price = {
                 'body wave': _613_5x5_price,
             }
         },
-        'fontal':
+        'frontal':
         {
             '13x4':
             {

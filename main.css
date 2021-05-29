@@ -34,7 +34,7 @@ textarea:focus {
     /* padding: 3px; */
 }
 
-.button_group {
+.button {
     width: 15%;
     text-align: center;
     padding: 5px 0;
@@ -67,7 +67,6 @@ button:active {
     display: flex;
     margin: 40px 0px;
     visibility: hidden;
-    text-align: center;
 }
 
 .textarea {

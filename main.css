@@ -67,6 +67,7 @@ button:active {
     display: flex;
     margin: 40px 0px;
     visibility: hidden;
+    text-align: center;
 }
 
 .textarea {
@@ -172,5 +173,8 @@ li.active {
         left: 0;
         bottom: 0;
         margin-left: 0px;
+    }
+    li {
+        font-size: 2rem;
     }
 }

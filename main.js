@@ -1,6 +1,15 @@
 function trim(str) {
     return str.replace(/\s+/g, '').toLocaleLowerCase();
 }
+function get_hair_type(category) {
+    if (closure_category.indexOf(category) >= 0) {
+        return hair_type[1];
+    } else if (frontal_category.indexOf(category) >= 0) {
+        return hair_type[2];
+    }
+
+    return null;
+}
 //构造信息
 function Hair(color, type, texture, category) {
     if (color == null) {
@@ -10,11 +19,7 @@ function Hair(color, type, texture, category) {
     }
 
     if (type == null) {
-        if (closure_category.indexOf(category) >= 0) {
-            this.type = hair_type[1];
-        } else if (frontal_category.indexOf(category) >= 0) {
-            this.type = hair_type[2];
-        }
+        this.type = get_hair_type(category);
     } else {
         this.type = type;
     }
@@ -40,10 +45,15 @@ function Hair(color, type, texture, category) {
 
     this.price = function (length) {
         if (null == this.category) {
-            console.log
             return hair_price[this.color][this.type][this.texture][length];
         }
-        return hair_price[this.color][this.type][this.category][this.texture][length];
+        var per_price = 0;
+        try {
+            per_price = hair_price[this.color][this.type][this.category][this.texture][length];
+        } catch (error) {
+            console.log(error);
+        }
+        return per_price;
     };
     this.count = function () {
         var count = 0;
@@ -68,7 +78,12 @@ function serialize(arrHair, dicFee = []) {
         if (null == hair.category) {
             output += hair.texture + ' ' + hair.type + ' ' + hair.color + ' color\n';
         } else {
-            output += hair.texture + ' ' + hair.category + ' ' + hair.type + ' ' + hair.color + ' color\n';
+            if (hair_type[3] == hair.type) {
+                output += hair.texture + ' ' + hair.category + ' ' + get_hair_type(hair.category) + ' ' + hair.type + ' ' + hair.color + ' color\n';
+            }
+            else {
+                output += hair.texture + ' ' + hair.category + ' ' + hair.type + ' ' + hair.color + ' color\n';
+            }
         }
         var dic = hair.volume;
         for (var length in dic) {
@@ -213,7 +228,7 @@ function unserialize(str) {
     return [arrHair, dicFee];
 }
 //获取关键词
-function find_hair_keyword(text, list) {
+function find_hair_keyword(text, list, is_type = false) {
     var line = trim(text);
     var arrName = [];
     for (const name of list) {
@@ -227,6 +242,13 @@ function find_hair_keyword(text, list) {
         return arrName[0]
     } else if (arrName.length > 1) {
         console.log(arrName);
+        if (is_type) {
+            for (const name of arrName) {
+                if (name.indexOf(hair_type[3]) >= 0) {
+                    return name;
+                }
+            }
+        }
         return arrName.sort(function (a, b) {
             return b.length - a.length;
         })[0];
@@ -264,7 +286,7 @@ function parse(str) {
             continue;
         }
         var texture = find_hair_keyword(line, hair_texture);
-        var type = find_hair_keyword(line, hair_type);
+        var type = find_hair_keyword(line, hair_type, true);
         var category = find_hair_keyword(line, closure_category.concat(frontal_category));
         var color = find_hair_keyword(line, hair_color);
         if (color == hair_color[2]) {
@@ -277,6 +299,7 @@ function parse(str) {
                 texture = hair.texture;
             }
         }
+
         if (texture != null) {
             console.log('parse:', color, type, texture, category);
             var hair = new Hair(color, type, texture, category);

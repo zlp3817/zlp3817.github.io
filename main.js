@@ -91,7 +91,7 @@ function serialize(arrHair, dicFee = []) {
     output += '[--';
     output += 'total: ' + count;
     for (var key in dicCount) {
-        output += ', ' + dicCount[key] + ' ' + key;
+        output += ', ' + dicCount[key] + ' ' + key + 's';
     }
 
     // output += '-weight: ' + weight / 1000 + 'kg--]\n';

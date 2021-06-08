@@ -123,7 +123,7 @@ const hair_price = {
             '13x6':
             {
                 'straight': _13x6_price,
-                'body bave': _13x6_price,
+                'body wave': _13x6_price,
                 'loose body wave': _13x6_price,
                 'deep wave': _13x6_price,
                 'water wave': _13x6_price,

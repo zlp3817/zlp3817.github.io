@@ -51,6 +51,7 @@ function Hair(color, type, texture, category) {
         try {
             per_price = hair_price[this.color][this.type][this.category][this.texture][length];
         } catch (error) {
+            console.log('hair_price[' + this.color + '][' + this.type + '][' + this.category + '][' + this.texture + '][' + length + ']');
             console.log(error);
         }
         return per_price;

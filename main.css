@@ -155,6 +155,7 @@ li.active {
     }
     .button {
         display: flex;
+        margin-top: auto;
         width: 100%;
         text-align: center;
         padding: 5px 0;

@@ -65,6 +65,10 @@
         border-bottom: 3px solid #1a73e8;
     }
 
+    div {
+        margin-left: 20px;
+    }
+
     /*在小于800 像素的屏幕，微小屏幕，更低分辨率的手机*/
 
     @media (max-width: 800px) {
@@ -80,6 +84,7 @@
         .nav {
             padding-left: 0px;
         }
+
     }
 </style>
 </head>
@@ -100,6 +105,9 @@
         <tbody>
         </tbody>
     </table>
+    <div>
+        <p><strong>Remark: </strong>Above price are without shipping cost.</p>
+    </div>
 </body>
 <script>
     function addHeader(table, arrStr) {
@@ -160,9 +168,13 @@
         $("#bundle").addClass("checked");
         var table = document.getElementById('table');
         clearTable(table);
-        addHeader(table, ['Length', 'Natural Color\n\n(ST, BW)', 'Natural Color\n\n(LW, Curly, DW)', '613 Color\n\n(ST, BW)']);
+        // addHeader(table, ['Length', 'Natural Color\n\n(ST, BW)', 'Natural Color\n\n(LW, Curly, DW)', '613 Color\n\n(ST, BW)']);
+        // for (var key in bundle_price) {
+        //     addRow(table, [key + '"', '$' + bundle_price[key], '$' + bundle_price2[key], '$' + _613_bundle_price[key]]);
+        // }
+        addHeader(table, ['Length', 'Natural Color\n\n(ST, BW)', 'Natural Color\n\n(LW, Curly, DW)', 'Natural Color\n\n(Kinky Curly)', 'Natural Color\n\n(Kinky Straight)', '613 Color\n\n(ST, BW)']);
         for (var key in bundle_price) {
-            addRow(table, [key + '"', '$' + bundle_price[key], '$' + bundle_price2[key], '$' + _613_bundle_price[key]]);
+            addRow(table, [key + '"', '$' + bundle_price[key], '$' + bundle_price2[key], '$' + (bundle_price[key] + 3), '$' + (bundle_price[key] + 5), '$' + _613_bundle_price[key]]);
         }
     }
 

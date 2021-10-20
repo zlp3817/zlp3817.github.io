@@ -69,7 +69,7 @@ button:active {
     visibility: hidden;
 }
 
-.textarea {
+.out {
     /* min-width: 400px; */
     width: 45%;
     min-height: 300px;
@@ -77,11 +77,24 @@ button:active {
     /* padding: 20px 20px 20px 20px; */
     word-break: break-word;
     white-space: pre-wrap;
-    padding: 15px 15px 50px;
     border-radius: 8px;
     background-color: white;
     border-top: 1px solid rgba(0, 0, 0, 0.12);
     box-shadow: 0 2px 2px rgb(0 0 0 / 22%);
+}
+
+.textarea {
+    margin-top: -20px;
+    margin-left: 10px;
+    margin-right: 20px;
+    word-break: break-word;
+    white-space: pre-wrap;
+    background-color: transparent;
+
+    /* border-radius: 8px;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 2px rgb(0 0 0 / 22%); */
+    height: 80%;
 }
 
 .textarea:focus {
@@ -115,7 +128,7 @@ li.active {
     color: #fff;
 }
 
-#output {
+.output {
     background-color: #f5f5f5;
 }
 
@@ -135,6 +148,25 @@ li.active {
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
 }
 
+.outside {
+    position: relative;
+}
+
+.inside {
+    width: 100%;
+    display: flex;
+    /* justify-content: space-around; */
+    justify-content: left;
+	background-color:transparent;
+    position: absolute;
+    bottom: 0px;
+    padding-left: 10px;
+}
+
+input[type="checkbox"] {
+    border: 1px solid silver;
+ }
+
 /*在小于800 像素的屏幕，微小屏幕，更低分辨率的手机*/
 
 @media (max-width: 800px) {
@@ -145,7 +177,7 @@ li.active {
     #wrap {
         display: block;
     }
-    .textarea {
+    .out {
         width: 100%;
         min-height: 250px;
         border-top: 1px solid rgba(0, 0, 0, 0.12);

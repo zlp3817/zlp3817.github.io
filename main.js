@@ -78,11 +78,13 @@ function Hair(color, type, texture, category) {
     }
 }
 //序列化
-function serialize(arrHair, dicFee = []) {
+function serialize(arrHair, dicFee, is_us, is_wig) {
     var output = '';
     var count = 0;
     var weight = 0;
+    var wigCount = 0;
     var totalAmount = 0;
+    var totalAmount2 = 0;
     var dicCount = new Array();
 
     for (const hair of arrHair) {
@@ -115,10 +117,21 @@ function serialize(arrHair, dicFee = []) {
 
     console.log('totalAmount: ', totalAmount)
     output += '[--';
-    output += 'total: ' + count;
-    for (var key in dicCount) {
-        output += ', ' + dicCount[key] + ' ' + key + 's';
+    if (is_wig) {
+        for (var key in dicCount) {
+            if (hair_type.indexOf(key) == 1 || hair_type.indexOf(key) == 2) {
+                wigCount += dicCount[key];
+            }
+        }
+        output += 'total: ' + wigCount + ' wigs';
+
+    } else {
+        output += 'total: ' + count;
+        for (var key in dicCount) {
+            output += ', ' + dicCount[key] + ' ' + key + 's';
+        }
     }
+
 
     // output += '-weight: ' + weight / 1000 + 'kg--]\n';
     output += '--]\n';
@@ -166,7 +179,18 @@ function serialize(arrHair, dicFee = []) {
 
             totalAmount = totalAmount + otherFee;
         } else {
-            shippingFee = 25 + Math.floor(weight / 500) * 10;
+            if (is_us) {
+                shippingFee = 25 + Math.floor(weight / 500) * 10;
+            }
+            else {
+                shippingFee = 30 + Math.floor(weight / 500) * 10;
+            }
+
+            if (is_wig) {
+                var wigMakingFee = 25 * wigCount;
+                output += 'wig making fee: $' + wigMakingFee + '\n';
+                totalAmount += wigMakingFee;
+            }
 
             output += 'shipping fee: $' + shippingFee + '\n';
             var paypalFee = (totalAmount + shippingFee) * 0.05;
@@ -175,6 +199,7 @@ function serialize(arrHair, dicFee = []) {
             discount = paypalFee % 1;
             discount = 3 + Number(discount.toFixed(2));
             output += 'discount: $' + discount + '\n';
+            totalAmount2 = totalAmount + shippingFee;
             totalAmount = totalAmount + shippingFee + paypalFee - discount;
         }
 
@@ -182,6 +207,12 @@ function serialize(arrHair, dicFee = []) {
 
     output += '\n';
     output += 'the total best payment is: $' + totalAmount.toFixed(2) + '\n';
+
+    if (is_us) {
+        output += '\n';
+        console.log('the total best payment is: $' + totalAmount2.toFixed(2) + '\n');
+        output += 'the total best payment is: $' + totalAmount2.toFixed(2) + ' (Zelle)\n';
+    }
 
     return output;
 }
@@ -291,7 +322,7 @@ function find_length_volume(text, list) {
     return [length, num];
 }
 //解析
-function parse(str) {
+function parse(str, is_us, is_wig) {
     var arrHair = [];
     var arrStr = str.match(/[^\r\n]+/g);
     for (const line of arrStr) {
@@ -330,7 +361,7 @@ function parse(str) {
         }
 
     }
-    return serialize(arrHair);
+    return serialize(arrHair, [], is_us, is_wig);
 }
 
 function init() {

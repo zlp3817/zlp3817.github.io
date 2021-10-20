@@ -17,18 +17,29 @@
 
 <body>
     <div id="wrap">
-        <div id="input" class="textarea" contenteditable="plaintext-only"></div>
+        <div class="out outside">
+            <div id="input" class="textarea" contenteditable="plaintext-only"></div>
+            <div class="inside">
+                <input id="us" type="checkbox" readonly="true" checked=true>U.S.</input>
+                <input id="wig" type="checkbox" readonly="true">Customized Wig</input>
+            </div>
+        </div>
         <div class="button">
             <button accesskey="1" onclick="OnOutput()">Output</button>
             <button accesskey="2" onclick="OnUpdate()">Update</button>
             <button accesskey="3" onclick="OnCopy()">Copy</button>
         </div>
-        <div id="output" class="textarea" contenteditable="plaintext-only"></div>
+        <div class="out output">
+            <div id="output" class="textarea" contenteditable="plaintext-only"></div>
+        </div>
     </div>
 </body>
 <script>
     window.onload = function () {
         document.getElementById('wrap').style.visibility = 'visible';
+
+        
+        console.log('userAgentInfo:', is_pc());
 
         // init();
     }
@@ -36,6 +47,9 @@
     $('.textarea').textcomplete([{
         match: /(^|\b)([a-z]{1,})$/i,
         search: function (term, callback) {
+            if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
+                return null;
+            }
             var words = hair_type.concat(hair_texture).concat(hair_color).concat(closure_category).concat(frontal_category).concat(hair_keyword);
             callback($.map(words, function (word) {
                 return word.indexOf(term.toLowerCase()) === 0 ? word : null;
@@ -47,6 +61,9 @@
     }, {
         match: /(^|\b)(\w{2,})$/,
         search: function (term, callback) {
+            if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
+                return null;
+            }
             var words = hair_type.concat(hair_texture).concat(hair_color).concat(closure_category).concat(frontal_category).concat(hair_keyword);
             callback($.map(words, function (word) {
                 return word.indexOf(term) === 0 ? word : null;
@@ -57,13 +74,22 @@
         }
     }]);
 
+    function is_pc() {
+        if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
+            return false;
+        }
+        return true;
+    }
+
     //输出
     function OnOutput() {
         document.getElementById('output').innerText = null;
         var text = document.getElementById('input').innerText;
         console.log('text:', text);
         if (text.length > 0) {
-            document.getElementById('output').innerText = parse(text);
+            var is_us = document.getElementById('us').checked;
+            var is_wig = document.getElementById('wig').checked;
+            document.getElementById('output').innerText = parse(text, is_us, is_wig);
             document.getElementById('output').style.visibility = 'visible';
             $('<div>').appendTo('body').addClass('alert').html('已输出').show().delay(1200).fadeOut();
         }
@@ -72,7 +98,9 @@
     //更新
     function OnUpdate() {
         var arrStr = unserialize(document.getElementById('output').innerText);
-        document.getElementById('output').innerText = serialize(arrStr[0], arrStr[1]);
+        var is_us = document.getElementById('us').checked;
+        var is_wig = document.getElementById('wig').checked;
+        document.getElementById('output').innerText = serialize(arrStr[0], arrStr[1], is_us, is_wig);
         $('<div>').appendTo('body').addClass('alert').html('已更新').show().delay(1200).fadeOut();
     }
     //复制

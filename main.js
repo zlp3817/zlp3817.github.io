@@ -10,6 +10,16 @@ function get_hair_type(category) {
 
     return null;
 }
+
+function get_hair_type2(type) {
+    console.log(type)
+    transparent_category = ['4x4', '5x5', '6x6', '7x7', '13x4', '13x6']
+    if (transparent_category.indexOf(type) >= 0) {
+        return 'transparent ' + type
+    }
+
+    return type
+}
 //构造信息
 function Hair(color, type, texture, category) {
     if (color == null) {
@@ -83,7 +93,7 @@ function serialize(arrHair, dicFee = []) {
                 output += hair.texture + ' ' + hair.category + ' ' + get_hair_type(hair.category) + ' ' + hair.type + ' ' + hair.color + ' color\n';
             }
             else {
-                output += hair.texture + ' ' + hair.category + ' ' + hair.type + ' ' + hair.color + ' color\n';
+                output += hair.texture + ' ' + get_hair_type2(hair.category) + ' ' + hair.type + ' ' + hair.color + ' color\n';
             }
         }
         var dic = hair.volume;
@@ -244,12 +254,14 @@ function find_hair_keyword(text, list, is_type = false) {
     } else if (arrName.length > 1) {
         console.log(arrName);
         if (is_type) {
+            //判断是否是wig
             for (const name of arrName) {
                 if (name.indexOf(hair_type[3]) >= 0) {
                     return name;
                 }
             }
         }
+        //获取名字长的关键词
         return arrName.sort(function (a, b) {
             return b.length - a.length;
         })[0];

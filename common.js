@@ -12,36 +12,36 @@ const dic_hd_category = { '4x4 hd': 'hd 4x4', '5x5 hd': 'hd 5x5', '13x4 hd': 'hd
 const bundle_price = { '10': 18, '12': 22, '14': 26, '16': 30, '18': 34, '20': 38, '22': 46, '24': 51, '26': 59, '28': 64, '30': 68 };
 const bundle_price2 = { '10': 19, '12': 23, '14': 27, '16': 31, '18': 35, '20': 39, '22': 47, '24': 52, '26': 60, '28': 65, '30': 69 };
 
-const _4x4_price = { '10': 33, '12': 53, '14': 55, '16': 59, '18': 61, '20': 67 };
-const _4x4_price2 = { '10': 35, '12': 55, '14': 57, '16': 61, '18': 63, '20': 69 };
+const transparent_4x4_price = { '10': 33, '12': 53, '14': 55, '16': 59, '18': 61, '20': 67 };
+const transparent_4x4_price2 = { '10': 35, '12': 55, '14': 57, '16': 61, '18': 63, '20': 69 };
 
 const hd_4x4_price = { '10': 0, '12': 63, '14': 66, '16': 70, '18': 73, '20': 76 };
 const hd_4x4_price2 = { '10': 0, '12': 65, '14': 68, '16': 72, '18': 75, '20': 78 };
 
-const _5x5_price = { '10': 0, '12': 68, '14': 71, '16': 75, '18': 80, '20': 83 };
-const _5x5_price2 = { '10': 0, '12': 70, '14': 73, '16': 77, '18': 82, '20': 85 };
+const transparent_5x5_price = { '10': 0, '12': 68, '14': 71, '16': 75, '18': 80, '20': 83 };
+const transparent_5x5_price2 = { '10': 0, '12': 70, '14': 73, '16': 77, '18': 82, '20': 85 };
 
 const hd_5x5_price = { '10': 0, '12': 78, '14': 82, '16': 85, '18': 89, '20': 92 };
 const hd_5x5_price2 = { '10': 0, '12': 80, '14': 84, '16': 87, '18': 91, '20': 94 };
 
-const _13x4_price = { '10': 53, '12': 90, '14': 93, '16': 100, '18': 106, '20': 111 };
-const _13x4_price2 = { '10': 55, '12': 92, '14': 95, '16': 102, '18': 108, '20': 113 };
+const transparent_13x4_price = { '10': 53, '12': 90, '14': 93, '16': 100, '18': 106, '20': 111 };
+const transparent_13x4_price2 = { '10': 55, '12': 92, '14': 95, '16': 102, '18': 108, '20': 113 };
 
 const hd_13x4_price = { '10': 0, '12': 115, '14': 118, '16': 123, '18': 128, '20': 133 };
 const hd_13x4_price2 = { '10': 0, '12': 117, '14': 120, '16': 125, '18': 130, '20': 135 };
 
-const _13x6_price = { '10': 61, '12': 67, '14': 77, '16': 140, '18': 150, '20': 160 };
-const _13x6_price2 = { '10': 63, '12': 69, '14': 79, '16': 142, '18': 152, '20': 162 };
+const transparent_13x6_price = { '10': 95, '12': 118, '14': 134, '16': 140, '18': 150, '20': 160 };
+const transparent_13x6_price2 = { '10': 97, '12': 120, '14': 136, '16': 142, '18': 152, '20': 162 };
 
-const _360_price = { '10': 76, '12': 86, '14': 95, '16': 110, '18': 120, '20': 124 };
-const _360_price2 = { '10': 78, '12': 88, '14': 97, '16': 112, '18': 122, '20': 126 };
+const transparent_360_price = { '10': 76, '12': 86, '14': 95, '16': 110, '18': 120, '20': 124 };
+const transparent_360_price2 = { '10': 78, '12': 88, '14': 97, '16': 112, '18': 122, '20': 126 };
 
-// const _613_bundle_price = { '10': 19, '12': 23, '14': 27, '16': 31, '18': 35, '20': 43, '22': 49, '24': 54, '26': 59, '28': 63, '30': 67 };
-const _613_bundle_price = { '10': 20, '12': 23, '14': 27, '16': 31, '18': 38, '20': 46, '22': 52, '24': 58, '26': 61, '28': 65, '30': 71 };
+// const bundle_613_price = { '10': 19, '12': 23, '14': 27, '16': 31, '18': 35, '20': 43, '22': 49, '24': 54, '26': 59, '28': 63, '30': 67 };
+const bundle_613_price = { '10': 20, '12': 23, '14': 27, '16': 31, '18': 38, '20': 46, '22': 52, '24': 58, '26': 61, '28': 65, '30': 71 };
 
-const _613_4x4_price = { '10': 35, '12': 57, '14': 60, '16': 64, '18': 68, '20': 71 };
-const _613_5x5_price = { '10': 0, '12': 67, '14': 71, '16': 74, '18': 79, '20': 83 };
-const _613_13x4_price = { '10': 86, '12': 95, '14': 98, '16': 108, '18': 111, '20': 125 };
+const transparent_613_4x4_price = { '10': 35, '12': 57, '14': 60, '16': 64, '18': 68, '20': 71 };
+const transparent_613_5x5_price = { '10': 0, '12': 67, '14': 71, '16': 74, '18': 79, '20': 83 };
+const transparent_613_13x4_price = { '10': 86, '12': 95, '14': 98, '16': 108, '18': 111, '20': 125 };
 const hair_price = {
     'natural':
     {
@@ -62,15 +62,15 @@ const hair_price = {
         {
             '4x4':
             {
-                'straight': _4x4_price,
-                'body wave': _4x4_price,
-                'loose body wave': _4x4_price2,
-                'deep wave': _4x4_price2,
-                'water wave': _4x4_price2,
-                'curly': _4x4_price2,
-                'loose wave': _4x4_price2,
-                'kinky curly': _4x4_price2,
-                'kinky straight': _4x4_price2,
+                'straight': transparent_4x4_price,
+                'body wave': transparent_4x4_price,
+                'loose body wave': transparent_4x4_price2,
+                'deep wave': transparent_4x4_price2,
+                'water wave': transparent_4x4_price2,
+                'curly': transparent_4x4_price2,
+                'loose wave': transparent_4x4_price2,
+                'kinky curly': transparent_4x4_price2,
+                'kinky straight': transparent_4x4_price2,
             },
             'hd 4x4':
             {
@@ -86,15 +86,15 @@ const hair_price = {
             },
             '5x5':
             {
-                'straight': _5x5_price,
-                'body wave': _5x5_price,
-                'loose body wave': _5x5_price2,
-                'deep wave': _5x5_price2,
-                'water wave': _5x5_price2,
-                'curly': _5x5_price2,
-                'loose wave': _5x5_price2,
-                'kinky curly': _5x5_price2,
-                'kinky straight': _5x5_price2,
+                'straight': transparent_5x5_price,
+                'body wave': transparent_5x5_price,
+                'loose body wave': transparent_5x5_price2,
+                'deep wave': transparent_5x5_price2,
+                'water wave': transparent_5x5_price2,
+                'curly': transparent_5x5_price2,
+                'loose wave': transparent_5x5_price2,
+                'kinky curly': transparent_5x5_price2,
+                'kinky straight': transparent_5x5_price2,
             },
             'hd 5x5':
             {
@@ -113,15 +113,15 @@ const hair_price = {
         {
             '13x4':
             {
-                'straight': _13x4_price,
-                'body wave': _13x4_price,
-                'loose body wave': _13x4_price2,
-                'deep wave': _13x4_price2,
-                'water wave': _13x4_price2,
-                'curly': _13x4_price2,
-                'loose wave': _13x4_price2,
-                'kinky curly': _13x4_price2,
-                'kinky straight': _13x4_price2,
+                'straight': transparent_13x4_price,
+                'body wave': transparent_13x4_price,
+                'loose body wave': transparent_13x4_price2,
+                'deep wave': transparent_13x4_price2,
+                'water wave': transparent_13x4_price2,
+                'curly': transparent_13x4_price2,
+                'loose wave': transparent_13x4_price2,
+                'kinky curly': transparent_13x4_price2,
+                'kinky straight': transparent_13x4_price2,
             },
             'hd 13x4':
             {
@@ -137,15 +137,15 @@ const hair_price = {
             },
             '13x6':
             {
-                'straight': _13x6_price,
-                'body wave': _13x6_price,
-                'loose body wave': _13x6_price2,
-                'deep wave': _13x6_price2,
-                'water wave': _13x6_price2,
-                'curly': _13x6_price2,
-                'loose wave': _13x6_price2,
-                'kinky curly': _13x6_price2,
-                'kinky straight': _13x6_price2,
+                'straight': transparent_13x6_price,
+                'body wave': transparent_13x6_price,
+                'loose body wave': transparent_13x6_price2,
+                'deep wave': transparent_13x6_price2,
+                'water wave': transparent_13x6_price2,
+                'curly': transparent_13x6_price2,
+                'loose wave': transparent_13x6_price2,
+                'kinky curly': transparent_13x6_price2,
+                'kinky straight': transparent_13x6_price2,
             }
         },
         'wig':
@@ -157,29 +157,29 @@ const hair_price = {
     {
         'bundle':
         {
-            'straight': _613_bundle_price,
-            'body wave': _613_bundle_price,
+            'straight': bundle_613_price,
+            'body wave': bundle_613_price,
 
         },
         'closure':
         {
             '4x4':
             {
-                'straight': _613_4x4_price,
-                'body wave': _613_4x4_price,
+                'straight': transparent_613_4x4_price,
+                'body wave': transparent_613_4x4_price,
             },
             '5x5':
             {
-                'straight': _613_5x5_price,
-                'body wave': _613_5x5_price,
+                'straight': transparent_613_5x5_price,
+                'body wave': transparent_613_5x5_price,
             }
         },
         'frontal':
         {
             '13x4':
             {
-                'straight': _613_13x4_price,
-                'body wave': _613_13x4_price,
+                'straight': transparent_613_13x4_price,
+                'body wave': transparent_613_13x4_price,
             }
         },
     }

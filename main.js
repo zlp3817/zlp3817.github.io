@@ -180,14 +180,14 @@ function serialize(arrHair, dicFee, is_us, is_wig) {
             totalAmount = totalAmount + otherFee;
         } else {
             if (is_us) {
-                shippingFee = 25 + Math.floor(weight / 500) * 10;
+                shippingFee = 27 + Math.floor(weight / 500) * 10;
             }
             else {
                 shippingFee = 30 + Math.floor(weight / 500) * 10;
             }
 
             if (is_wig) {
-                var wigMakingFee = 25 * wigCount;
+                var wigMakingFee = 27 * wigCount;
                 output += 'wig making fee: $' + wigMakingFee + '\n';
                 totalAmount += wigMakingFee;
             }

@@ -174,7 +174,7 @@
         // }
         addHeader(table, ['Length', 'Natural Color\n\n(ST, BW)', 'Natural Color\n\n(LW, Curly, DW)', 'Natural Color\n\n(Kinky Curly)', 'Natural Color\n\n(Kinky Straight)', '613 Color\n\n(ST, BW)']);
         for (var key in bundle_price) {
-            addRow(table, [key + '"', '$' + bundle_price[key], '$' + bundle_price2[key], '$' + (bundle_price[key] + 3), '$' + (bundle_price[key] + 5), '$' + _613_bundle_price[key]]);
+            addRow(table, [key + '"', '$' + bundle_price[key], '$' + bundle_price2[key], '$' + (bundle_price[key] + 3), '$' + (bundle_price[key] + 5), '$' + bundle_613_price[key]]);
         }
     }
 
@@ -189,14 +189,14 @@
             'Natural Color\n\n(ST, BW) (LW, DW, Curly +$2)\nHD 5x5 Lace Closure',
             '613 Color\n\n(ST, BW)\n4x4 Lace Closure',
             '613 Color\n\n(ST, BW)\n5x5 Lace Closure']);
-        for (var key in _4x4_price) {
+        for (var key in transparent_4x4_price) {
             addRow(table, [key + '"',
-            '$' + _4x4_price[key],
+            '$' + transparent_4x4_price[key],
             '$' + hd_4x4_price[key],
-            '$' + _5x5_price[key],
+            '$' + transparent_5x5_price[key],
             '$' + hd_5x5_price[key],
-            '$' + _613_4x4_price[key],
-            '$' + _613_5x5_price[key]]);
+            '$' + transparent_613_4x4_price[key],
+            '$' + transparent_613_5x5_price[key]]);
         }
     }
 
@@ -210,13 +210,13 @@
             'Natural Color\n\n(ST, BW) (LW, DW, Curly +$2)\n13x6 Lace Frontal',
             'Natural Color\n\n(ST, BW) (LW, DW, Curly +$2)\n360 Lace Frontal',
             '613 Color\n\n(ST, BW)\n13x4 Lace Frontal']);
-        for (var key in _13x4_price) {
+        for (var key in transparent_13x4_price) {
             addRow(table, [key + '"',
-            '$' + _13x4_price[key],
+            '$' + transparent_13x4_price[key],
             '$' + hd_13x4_price[key],
-            '$' + _13x6_price[key],
-            '$' + _360_price[key],
-            '$' + _613_13x4_price[key]]);
+            '$' + transparent_13x6_price[key],
+            '$' + transparent_360_price[key],
+            '$' + transparent_613_13x4_price[key]]);
         }
     }
 

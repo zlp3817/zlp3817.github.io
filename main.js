@@ -137,73 +137,76 @@ function serialize(arrHair, dicFee, is_us, is_wig) {
     output += '--]\n';
     console.log('weight:', weight / 1000, 'kg');
 
-    if (count > 0) {
-        console.log('dicFee:', dicFee);
-        if (Object.keys(dicFee).length > 0) {
-            var otherFee = 0;
-            for (var key in dicFee) {
-                if (key.indexOf('discount') >= 0 || key.indexOf('paypal') >= 0) {
-                    continue;
-                } else {
-                    otherFee += dicFee[key];
-                }
-            }
+    if (count == 0)
+        console.log('hair count is null');
 
-            var paypalFee = (totalAmount + otherFee) * 0.05;
-            for (var key in dicFee) {
-                if (key.indexOf('paypal') >= 0) {
-                    dicFee[key] = Number(paypalFee.toFixed(2));
-                    console.log('paypal fee:', dicFee[key]);
-                    break;
-                }
+    console.log('dicFee:', dicFee);
+    //判断是output还是update
+    if (Object.keys(dicFee).length > 0) {
+        var otherFee = 0;
+        for (var key in dicFee) {
+            if (key.indexOf('discount') >= 0 || key.indexOf('paypal') >= 0) {
+                continue;
+            } else {
+                otherFee += dicFee[key];
             }
+        }
+        totalAmount2 = totalAmount + otherFee;
 
-            for (var key in dicFee) {
-                if (key.indexOf('discount') >= 0) {
-                    var discount = Math.floor(dicFee[key]) + paypalFee % 1;
-                    dicFee[key] = Number(discount.toFixed(2));
-                    console.log('discount fee:', dicFee[key]);
-                    break;
-                }
+        var paypalFee = (totalAmount + otherFee) * 0.05;
+        for (var key in dicFee) {
+            if (key.indexOf('paypal') >= 0) {
+                dicFee[key] = Number(paypalFee.toFixed(2));
+                console.log('paypal fee:', dicFee[key]);
+                break;
             }
-
-            otherFee = 0;
-            for (var key in dicFee) {
-                output += key + '$' + dicFee[key] + '\n';
-                if (key.indexOf('discount') >= 0) {
-                    otherFee -= dicFee[key];
-                } else {
-                    otherFee += dicFee[key];
-                }
-            }
-
-            totalAmount = totalAmount + otherFee;
-        } else {
-            if (is_us) {
-                shippingFee = 27 + Math.floor(weight / 500) * 10;
-            }
-            else {
-                shippingFee = 30 + Math.floor(weight / 500) * 10;
-            }
-
-            if (is_wig) {
-                var wigMakingFee = 25 * wigCount;
-                output += 'wig making fee: $' + wigMakingFee + '\n';
-                totalAmount += wigMakingFee;
-            }
-
-            output += 'shipping fee: $' + shippingFee + '\n';
-            var paypalFee = (totalAmount + shippingFee) * 0.05;
-            paypalFee = Number(paypalFee.toFixed(2));
-            output += 'paypal fee: $' + paypalFee + '\n';
-            discount = paypalFee % 1;
-            discount = 3 + Number(discount.toFixed(2));
-            output += 'discount: $' + discount + '\n';
-            totalAmount2 = totalAmount + shippingFee;
-            totalAmount = totalAmount + shippingFee + paypalFee - discount;
         }
 
+        for (var key in dicFee) {
+            if (key.indexOf('discount') >= 0) {
+                var discount = Math.floor(dicFee[key]) + paypalFee % 1;
+                dicFee[key] = Number(discount.toFixed(2));
+                console.log('discount fee:', dicFee[key]);
+                break;
+            }
+        }
+
+        otherFee = 0;
+        for (var key in dicFee) {
+            output += key + '$' + dicFee[key] + '\n';
+            if (key.indexOf('discount') >= 0) {
+                otherFee -= dicFee[key];
+            } else {
+                otherFee += dicFee[key];
+            }
+        }
+
+        totalAmount = totalAmount + otherFee;
+    } else {
+        if (is_us) {
+            shippingFee = 27 + Math.floor(weight / 500) * 10;
+        }
+        else {
+            shippingFee = 30 + Math.floor(weight / 500) * 10;
+        }
+
+        if (is_wig) {
+            var wigMakingFee = 25 * wigCount;
+            output += 'wig making fee: $' + wigMakingFee + '\n';
+            totalAmount += wigMakingFee;
+        }
+
+        output += 'shipping fee: $' + shippingFee + '\n';
+        var paypalFee = (totalAmount + shippingFee) * 0.05;
+        paypalFee = Number(paypalFee.toFixed(2));
+        output += 'paypal fee: $' + paypalFee + '\n';
+        discount = paypalFee % 1;
+        discount = 3 + Number(discount.toFixed(2));
+        output += 'discount: $' + discount + '\n';
+        totalAmount2 = totalAmount + shippingFee;
+        totalAmount = totalAmount + shippingFee + paypalFee - discount;
     }
+
 
     output += '\n';
     output += 'the total best payment is: $' + totalAmount.toFixed(2) + '\n';
@@ -324,43 +327,48 @@ function find_length_volume(text, list) {
 //解析
 function parse(str, is_us, is_wig) {
     var arrHair = [];
-    var arrStr = str.match(/[^\r\n]+/g);
-    for (const line of arrStr) {
-        if (line.length < 2) {
-            continue;
-        }
-        var texture = find_hair_keyword(line, hair_texture);
-        var type = find_hair_keyword(line, hair_type, true);
-        var category = find_hair_keyword(line, closure_category.concat(frontal_category));
-        var color = find_hair_keyword(line, hair_color);
-        if (color == hair_color[2]) {
-            color = hair_color[1];
-        }
-
-        if (texture == null) {
-            if (category != null) {
-                var hair = arrHair[arrHair.length - 1];
-                texture = hair.texture;
+    try {
+        var arrStr = str.match(/[^\r\n]+/g);
+        for (const line of arrStr) {
+            if (line.length < 2) {
+                continue;
             }
+            var texture = find_hair_keyword(line, hair_texture);
+            var type = find_hair_keyword(line, hair_type, true);
+            var category = find_hair_keyword(line, closure_category.concat(frontal_category));
+            var color = find_hair_keyword(line, hair_color);
+            if (color == hair_color[2]) {
+                color = hair_color[1];
+            }
+    
+            if (texture == null) {
+                if (category != null) {
+                    var hair = arrHair[arrHair.length - 1];
+                    texture = hair.texture;
+                }
+            }
+    
+            if (texture != null) {
+                console.log('parse:', color, type, texture, category);
+                var hair = new Hair(color, type, texture, category);
+                arrHair.push(hair);
+            }
+    
+            var volume = find_length_volume(line, hair_length)
+            if (volume[0] > 0) {
+                var length = volume[0];
+                var number = volume[1];
+                var hair = arrHair[arrHair.length - 1];
+                var price = hair.price(length);
+                hair.volume[length] = [price, number];
+                console.log('parse:', length, price, number);
+            }
+    
         }
-
-        if (texture != null) {
-            console.log('parse:', color, type, texture, category);
-            var hair = new Hair(color, type, texture, category);
-            arrHair.push(hair);
-        }
-
-        var volume = find_length_volume(line, hair_length)
-        if (volume[0] > 0) {
-            var length = volume[0];
-            var number = volume[1];
-            var hair = arrHair[arrHair.length - 1];
-            var price = hair.price(length);
-            hair.volume[length] = [price, number];
-            console.log('parse:', length, price, number);
-        }
-
+    } catch(error) {
+        console.error();
     }
+    
     return serialize(arrHair, [], is_us, is_wig);
 }
 

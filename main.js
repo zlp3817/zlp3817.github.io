@@ -115,7 +115,7 @@ function serialize(arrHair, dicFee, is_us, is_wig) {
         }
     }
 
-    console.log('totalAmount: ', totalAmount)
+    console.log('======================>totalAmount: ', totalAmount)
     output += '[--';
     if (is_wig) {
         for (var key in dicCount) {
@@ -201,7 +201,7 @@ function serialize(arrHair, dicFee, is_us, is_wig) {
         paypalFee = Number(paypalFee.toFixed(2));
         output += 'paypal fee: $' + paypalFee + '\n';
         discount = paypalFee % 1;
-        discount = 3 + Number(discount.toFixed(2));
+        discount = 0 + Number(discount.toFixed(2));
         output += 'discount: $' + discount + '\n';
         totalAmount2 = totalAmount + shippingFee;
         totalAmount = totalAmount + shippingFee + paypalFee - discount;

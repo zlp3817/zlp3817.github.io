@@ -156,26 +156,27 @@ function serialize(arrHair, dicFee, is_us, is_wig) {
         var paypalFee = (totalAmount + otherFee) * 0.05;
         for (var key in dicFee) {
             if (key.indexOf('paypal') >= 0) {
-                dicFee[key] = Number(paypalFee.toFixed(2));
+                dicFee[key] = Math.ceil(paypalFee);
                 console.log('paypal fee:', dicFee[key]);
                 break;
             }
         }
 
-        for (var key in dicFee) {
-            if (key.indexOf('discount') >= 0) {
-                var discount = Math.floor(dicFee[key]) + paypalFee % 1;
-                dicFee[key] = Number(discount.toFixed(2));
-                console.log('discount fee:', dicFee[key]);
-                break;
-            }
-        }
+        // for (var key in dicFee) {
+        //     if (key.indexOf('discount') >= 0) {
+        //         var discount = Math.floor(dicFee[key]);
+        //         dicFee[key] = Number(discount.toFixed(2));
+        //         console.log('discount fee:', dicFee[key]);
+        //         break;
+        //     }
+        // }
 
         otherFee = 0;
         for (var key in dicFee) {
             output += key + '$' + dicFee[key] + '\n';
             if (key.indexOf('discount') >= 0) {
                 otherFee -= dicFee[key];
+                totalAmount2 -= dicFee[key];
             } else {
                 otherFee += dicFee[key];
             }
@@ -198,10 +199,9 @@ function serialize(arrHair, dicFee, is_us, is_wig) {
 
         output += 'shipping fee: $' + shippingFee + '\n';
         var paypalFee = (totalAmount + shippingFee) * 0.05;
-        paypalFee = Number(paypalFee.toFixed(2));
+        paypalFee = Math.ceil(paypalFee);
         output += 'paypal fee: $' + paypalFee + '\n';
-        discount = paypalFee % 1;
-        discount = 0 + Number(discount.toFixed(2));
+        discount = 0 
         output += 'discount: $' + discount + '\n';
         totalAmount2 = totalAmount + shippingFee;
         totalAmount = totalAmount + shippingFee + paypalFee - discount;

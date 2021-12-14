@@ -189,16 +189,16 @@
         clearTable(table);
         addHeader(table, ['Length',
             'Transparent 4x4 Closure\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
-            'HD 4x4 Closure\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
             'Transparent 5x5 Closure\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
+            'HD 4x4 Closure\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
             'HD 5x5 Closure\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
             'Transparent 4x4 Closure\n613 Color\n(ST, BW)',
             'Transparent 5x5 Closure\n613 Color\n(ST, BW)']);
         for (var key in transparent_4x4_price) {
             addRow(table, [key + '"',
             '$' + transparent_4x4_price[key],
-            '$' + hd_4x4_price[key],
             '$' + transparent_5x5_price[key],
+            '$' + hd_4x4_price[key],
             '$' + hd_5x5_price[key],
             '$' + transparent_613_4x4_price[key],
             '$' + transparent_613_5x5_price[key]]);
@@ -211,15 +211,15 @@
         clearTable(table);
         addHeader(table, ['Length',
             'Transparent 13x4 Frontal\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
-            'HD 13x4 Frontal\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
             'Transparent 13x6 Frontal\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
+            'HD 13x4 Frontal\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
             'Transparent 360 Frontal\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
             'Transparent 13x4 Frontal\n613 Color\n(ST, BW)']);
         for (var key in transparent_13x4_price) {
             addRow(table, [key + '"',
             '$' + transparent_13x4_price[key],
-            '$' + hd_13x4_price[key],
             '$' + transparent_13x6_price[key],
+            '$' + hd_13x4_price[key],
             '$' + transparent_360_price[key],
             '$' + transparent_613_13x4_price[key]]);
         }

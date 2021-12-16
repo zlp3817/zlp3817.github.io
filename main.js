@@ -78,7 +78,7 @@ function Hair(color, type, texture, category) {
     }
 }
 //序列化
-function serialize(arrHair, dicFee, is_us, is_wig) {
+function serialize(arrHair, dicFee, is_us, is_discount, is_wig) {
     var output = '';
     var count = 0;
     var weight = 0;
@@ -182,6 +182,12 @@ function serialize(arrHair, dicFee, is_us, is_wig) {
             }
         }
 
+        // if (output.indexOf('discount') < 0) {
+        //     if (is_discount) {
+        //         output += 'discount: $' + discount + '\n';
+        //     }
+        // }
+
         totalAmount = totalAmount + otherFee;
     } else {
         if (is_us) {
@@ -202,7 +208,9 @@ function serialize(arrHair, dicFee, is_us, is_wig) {
         paypalFee = Math.ceil(paypalFee);
         output += 'paypal fee: $' + paypalFee + '\n';
         discount = 0 
-        output += 'discount: $' + discount + '\n';
+        if (is_discount) {
+            output += 'discount: $' + discount + '\n';
+        }
         totalAmount2 = totalAmount + shippingFee;
         totalAmount = totalAmount + shippingFee + paypalFee - discount;
     }
@@ -325,7 +333,7 @@ function find_length_volume(text, list) {
     return [length, num];
 }
 //解析
-function parse(str, is_us, is_wig) {
+function parse(str, is_us, is_discount, is_wig) {
     var arrHair = [];
     try {
         var arrStr = str.match(/[^\r\n]+/g);
@@ -369,7 +377,7 @@ function parse(str, is_us, is_wig) {
         console.error();
     }
     
-    return serialize(arrHair, [], is_us, is_wig);
+    return serialize(arrHair, [], is_us, is_discount, is_wig);
 }
 
 function init() {

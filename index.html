@@ -90,9 +90,9 @@
         console.log('text:', text);
         if (text.length > 0) {
             var is_us = document.getElementById('us').checked;
-            var is_discount = document.getElementById('discount').checked;
             var is_wig = document.getElementById('wig').checked;
-            document.getElementById('output').innerText = parse(text, is_us, is_discount, is_wig);
+            var is_discount = document.getElementById('discount').checked;
+            document.getElementById('output').innerText = parse(text, is_us, is_wig, is_discount);
             document.getElementById('output').style.visibility = 'visible';
             $('<div>').appendTo('body').addClass('alert').html('已输出').show().delay(1200).fadeOut();
         }
@@ -102,9 +102,9 @@
     function OnUpdate() {
         var arrStr = unserialize(document.getElementById('output').innerText);
         var is_us = document.getElementById('us').checked;
-        var is_discount = document.getElementById('discount').checked;
         var is_wig = document.getElementById('wig').checked;
-        document.getElementById('output').innerText = serialize(arrStr[0], arrStr[1], is_us, is_discount, is_wig);
+        var is_discount = document.getElementById('discount').checked;
+        document.getElementById('output').innerText = serialize(arrStr[0], arrStr[1], is_us, is_wig, is_discount);
         $('<div>').appendTo('body').addClass('alert').html('已更新').show().delay(1200).fadeOut();
     }
     //复制

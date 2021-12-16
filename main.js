@@ -78,7 +78,7 @@ function Hair(color, type, texture, category) {
     }
 }
 //序列化
-function serialize(arrHair, dicFee, is_us, is_discount, is_wig) {
+function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
     var output = '';
     var count = 0;
     var weight = 0;
@@ -333,7 +333,7 @@ function find_length_volume(text, list) {
     return [length, num];
 }
 //解析
-function parse(str, is_us, is_discount, is_wig) {
+function parse(str, is_us, is_wig, is_discount) {
     var arrHair = [];
     try {
         var arrStr = str.match(/[^\r\n]+/g);
@@ -377,7 +377,7 @@ function parse(str, is_us, is_discount, is_wig) {
         console.error();
     }
     
-    return serialize(arrHair, [], is_us, is_discount, is_wig);
+    return serialize(arrHair, [], is_us, is_wig, is_discount);
 }
 
 function init() {

@@ -197,8 +197,13 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
             shippingFee = 30 + Math.floor(weight / 500) * 10;
         }
 
+        if (count > 40) {
+            shippingFee += 20;
+        }
+
+
         if (is_wig) {
-            var wigMakingFee = 25 * wigCount;
+            var wigMakingFee = 30 * wigCount;
             output += 'wig making fee: $' + wigMakingFee + '\n';
             totalAmount += wigMakingFee;
         }

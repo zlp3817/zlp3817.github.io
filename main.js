@@ -203,7 +203,7 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
 
 
         if (is_wig) {
-            var wigMakingFee = 30 * wigCount;
+            var wigMakingFee = 25 * wigCount;
             output += 'wig making fee: $' + wigMakingFee + '\n';
             totalAmount += wigMakingFee;
         }

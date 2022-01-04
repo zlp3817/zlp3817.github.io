@@ -124,7 +124,7 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         }
         output += 'total: ' + wigCount + ' wigs';
 
-        console.log('======================>totalAmount: ', totalAmount + 25*wigCount)
+        console.log('======================>totalAmount with wig making fee: ', totalAmount + 25*wigCount)
 
     } else {
         output += 'total: ' + count;
@@ -133,7 +133,7 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         }
 
         console.log('======================>totalAmount: ', totalAmount)
-        
+
     }
 
 

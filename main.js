@@ -216,11 +216,12 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         var paypalFee = (totalAmount + shippingFee) * 0.05;
         paypalFee = Math.ceil(paypalFee);
         output += 'paypal fee: $' + paypalFee + '\n';
-        discount = parseInt(totalAmount/100) * 5;
+        discount = 0;
         if (is_discount) {
+            discount = parseInt(totalAmount/100) * 5;
             output += 'discount: $' + discount + '\n';
         }
-        totalAmount2 = totalAmount + shippingFee;
+        totalAmount2 = totalAmount + shippingFee - discount;
         totalAmount = totalAmount + shippingFee + paypalFee - discount;
     }
 

@@ -169,17 +169,17 @@
         var table = document.getElementById('table');
         clearTable(table);
         // addHeader(table, ['Length', 'Natural Color\n\n(ST, BW)', 'Natural Color\n\n(LW, Curly, DW)', '613 Color\n\n(ST, BW)']);
-        // for (var key in bundle_price) {
-        //     addRow(table, [key + '"', '$' + bundle_price[key], '$' + bundle_price2[key], '$' + _613_bundle_price[key]]);
+        // for (var length in bundle_price) {
+        //     addRow(table, [length + '"', '$' + bundle_price[length], '$' + bundle_price2[length], '$' + _613_bundle_price[length]]);
         // }
-        addHeader(table, ['Length', 
-        '(ST, BW)\n\nNatural Color', 
-        '(LW, Curly, DW)\n\nNatural Color', 
-        '(Kinky Curly)\n\nNatural Color', 
-        '(Kinky Straight)\n\nNatural Color', 
-        '(ST, BW)\n\n613 Color']);
-        for (var key in bundle_price) {
-            addRow(table, [key + '"', '$' + bundle_price[key], '$' + bundle_price2[key], '$' + (bundle_price[key] + 3), '$' + (bundle_price[key] + 5), '$' + bundle_613_price[key]]);
+        addHeader(table, ['Length',
+            '(ST, BW)\n\nNatural Color',
+            '(LW, Curly, DW)\n\nNatural Color',
+            '(Kinky Curly)\n\nNatural Color',
+            '(Kinky Straight)\n\nNatural Color',
+            '(ST, BW)\n\n613 Color']);
+        for (var length in bundle_price) {
+            addRow(table, [length + '"', '$' + bundle_price[length], '$' + bundle_price2[length], '$' + (bundle_price[length] + 3), '$' + (bundle_price[length] + 5), '$' + bundle_613_price[length]]);
         }
     }
 
@@ -194,14 +194,14 @@
             'HD 5x5 Closure\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
             'Transparent 4x4 Closure\n613 Color\n(ST, BW)',
             'Transparent 5x5 Closure\n613 Color\n(ST, BW)']);
-        for (var key in transparent_4x4_price) {
-            addRow(table, [key + '"',
-            '$' + transparent_4x4_price[key],
-            '$' + transparent_5x5_price[key],
-            '$' + hd_4x4_price[key],
-            '$' + hd_5x5_price[key],
-            '$' + transparent_613_4x4_price[key],
-            '$' + transparent_613_5x5_price[key]]);
+        for (var length in transparent_4x4_price) {
+            addRow(table, [length + '"',
+            '$' + transparent_4x4_price[length],
+            '$' + transparent_5x5_price[length],
+            '$' + hd_4x4_price[length],
+            '$' + hd_5x5_price[length],
+            '$' + transparent_613_4x4_price[length],
+            '$' + transparent_613_5x5_price[length]]);
         }
     }
 
@@ -215,13 +215,13 @@
             'HD 13x4 Frontal\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
             'Transparent 360 Frontal\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
             'Transparent 13x4 Frontal\n613 Color\n(ST, BW)']);
-        for (var key in transparent_13x4_price) {
-            addRow(table, [key + '"',
-            '$' + transparent_13x4_price[key],
-            '$' + transparent_13x6_price[key],
-            '$' + hd_13x4_price[key],
-            '$' + transparent_360_price[key],
-            '$' + transparent_613_13x4_price[key]]);
+        for (var length in transparent_13x4_price) {
+            addRow(table, [length + '"',
+            '$' + transparent_13x4_price[length],
+            '$' + transparent_13x6_price[length],
+            '$' + hd_13x4_price[length],
+            '$' + transparent_360_price[length],
+            '$' + transparent_613_13x4_price[length]]);
         }
     }
 
@@ -241,20 +241,36 @@
             'Transparent 5x5 Customized Wig\n613 Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
             'Transparent 13x4 Customized Wig\n613 Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
         ]);
-        for (var key in transparent_4x4_wig_price) {
-            addRow(table, [key + '"',
-            '$' + transparent_4x4_wig_price[key],
-            '$' + transparent_5x5_wig_price[key],
-            '$' + hd_4x4_wig_price[key],
-            '$' + hd_5x5_wig_price[key],
-            '$' + transparent_13x4_wig_price[key],
-            '$' + transparent_13x6_wig_price[key],
-            '$' + hd_13x4_wig_price[key],
-            '$' + transparent_613_4x4_wig_price[key],
-            '$' + transparent_613_5x5_wig_price[key],
-            '$' + transparent_613_13x4_wig_price[key],
-        ]);
+        for (var length in transparent_4x4_wig_price) {
+            var closure_frontal_length = length;
+            if (length > 20) {
+                closure_frontal_length = 20;
+            }
+            addRow(table, [length + '"',
+            '$' + caculateWigPrice(bundle_price[length], transparent_4x4_price[closure_frontal_length], length),
+            '$' + caculateWigPrice(bundle_price[length], transparent_5x5_price[closure_frontal_length], length),
+            '$' + caculateWigPrice(bundle_price[length], hd_4x4_price[closure_frontal_length], length),
+            '$' + caculateWigPrice(bundle_price[length], hd_5x5_price[closure_frontal_length], length),
+            '$' + caculateWigPrice(bundle_price[length], transparent_13x4_price[closure_frontal_length], length),
+            '$' + caculateWigPrice(bundle_price[length], transparent_13x6_price[closure_frontal_length], length),
+            '$' + caculateWigPrice(bundle_price[length], hd_13x4_price[closure_frontal_length], length),
+            '$' + caculateWigPrice(bundle_613_price[length], transparent_613_4x4_price[closure_frontal_length], length),
+            '$' + caculateWigPrice(bundle_613_price[length], transparent_613_5x5_price[closure_frontal_length], length),
+            '$' + caculateWigPrice(bundle_613_price[length], transparent_613_13x4_price[closure_frontal_length], length),
+            ]);
         }
+    }
+
+    function caculateWigPrice(bundle_price, closure_frontal_price, length) {
+        if (0 == closure_frontal_price) {
+            return 0;
+        }
+
+        if (length < 14) {
+            return bundle_price * 2 + closure_frontal_price + 25;
+        }
+        
+        return bundle_price * 3 + closure_frontal_price + 25;
     }
 
     window.onload = function () {

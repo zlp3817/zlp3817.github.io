@@ -168,32 +168,43 @@
         $("#bundle").addClass("checked");
         var table = document.getElementById('table');
         clearTable(table);
-        // addHeader(table, ['Length', 'Natural Color\n\n(ST, BW)', 'Natural Color\n\n(LW, Curly, DW)', '613 Color\n\n(ST, BW)']);
-        // for (var length in bundle_price) {
-        //     addRow(table, [length + '"', '$' + bundle_price[length], '$' + bundle_price2[length], '$' + _613_bundle_price[length]]);
-        // }
+      
         addHeader(table, ['Length',
-            '(ST, BW)\n\nNatural Color',
-            '(LW, Curly, DW)\n\nNatural Color',
-            '(Kinky Curly)\n\nNatural Color',
-            '(Kinky Straight)\n\nNatural Color',
-            '(ST, BW)\n\n613 Color']);
+            'Natural Color',
+            '613 Color']);
         for (var length in bundle_price) {
-            addRow(table, [length + '"', '$' + bundle_price[length], '$' + bundle_price2[length], '$' + (bundle_price[length] + 3), '$' + (bundle_price[length] + 5), '$' + bundle_613_price[length]]);
+            addRow(table, [length + '"', '$' + bundle_price[length], '$' + bundle_613_price[length]]);
         }
+        // addHeader(table, ['Length',
+        //     '(ST, BW)\n\nNatural Color',
+        //     '(LW, Curly, DW)\n\nNatural Color',
+        //     '(Kinky Curly)\n\nNatural Color',
+        //     '(Kinky Straight)\n\nNatural Color',
+        //     '(ST, BW)\n\n613 Color']);
+        // for (var length in bundle_price) {
+        //     addRow(table, [length + '"', '$' + bundle_price[length], '$' + bundle_price2[length], '$' + (bundle_price[length] + 3), '$' + (bundle_price[length] + 5), '$' + bundle_613_price[length]]);
+        // }
     }
 
     function onClosure() {
         $("#closure").addClass("checked");
         var table = document.getElementById('table');
         clearTable(table);
+
         addHeader(table, ['Length',
-            'Transparent 4x4 Closure\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
-            'Transparent 5x5 Closure\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
-            'HD 4x4 Closure\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
-            'HD 5x5 Closure\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
-            'Transparent 4x4 Closure\n613 Color\n(ST, BW)',
-            'Transparent 5x5 Closure\n613 Color\n(ST, BW)']);
+            'Transparent 4x4 Closure\nNatural Color',
+            'Transparent 5x5 Closure\nNatural Color',
+            'HD 4x4 Closure\nNatural Color',
+            'HD 5x5 Closure\nNatural Color',
+            'Transparent 4x4 Closure\n613 Color',
+            'Transparent 5x5 Closure\n613 Color']);
+        // addHeader(table, ['Length',
+        //     'Transparent 4x4 Closure\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
+        //     'Transparent 5x5 Closure\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
+        //     'HD 4x4 Closure\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
+        //     'HD 5x5 Closure\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
+        //     'Transparent 4x4 Closure\n613 Color\n(ST, BW)',
+        //     'Transparent 5x5 Closure\n613 Color\n(ST, BW)']);
         for (var length in transparent_4x4_price) {
             addRow(table, [length + '"',
             '$' + transparent_4x4_price[length],
@@ -209,12 +220,19 @@
         $("#frontal").addClass("checked");
         var table = document.getElementById('table');
         clearTable(table);
+
         addHeader(table, ['Length',
-            'Transparent 13x4 Frontal\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
-            'Transparent 13x6 Frontal\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
-            'HD 13x4 Frontal\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
-            'Transparent 360 Frontal\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
-            'Transparent 13x4 Frontal\n613 Color\n(ST, BW)']);
+            'Transparent 13x4 Frontal\nNatural Color',
+            'Transparent 13x6 Frontal\nNatural Color',
+            'HD 13x4 Frontal\nNatural Color',
+            'Transparent 360 Frontal\nNatural Color',
+            'Transparent 13x4 Frontal\n613 Color']);
+        // addHeader(table, ['Length',
+        //     'Transparent 13x4 Frontal\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
+        //     'Transparent 13x6 Frontal\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
+        //     'HD 13x4 Frontal\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
+        //     'Transparent 360 Frontal\nNatural Color\n(ST, BW) (LW, DW, Curly +$2)',
+        //     'Transparent 13x4 Frontal\n613 Color\n(ST, BW)']);
         for (var length in transparent_13x4_price) {
             addRow(table, [length + '"',
             '$' + transparent_13x4_price[length],
@@ -229,18 +247,31 @@
         $("#wig").addClass("checked");
         var table = document.getElementById('table');
         clearTable(table);
+        
         addHeader(table, ['Length',
-            'Transparent 4x4 Customized Wig\nNatural Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
-            'Transparent 5x5 Customized Wig\nNatural Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
-            'HD 4x4 Customized Wig\nNatural Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
-            'HD 5x5 Customized Wig\nNatural Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
-            'Transparent 13x4 Customized Wig\nNatural Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
-            'Transparent 13x6 Customized Wig\nNatural Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
-            'HD 13x4 Customized Wig\nNatural Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
-            'Transparent 4x4 Customized Wig\n613 Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
-            'Transparent 5x5 Customized Wig\n613 Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
-            'Transparent 13x4 Customized Wig\n613 Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
+            'Transparent 4x4 Customized Wig\nNatural Color',
+            'Transparent 5x5 Customized Wig\nNatural Color',
+            'HD 4x4 Customized Wig\nNatural Color',
+            'HD 5x5 Customized Wig\nNatural Color',
+            'Transparent 13x4 Customized Wig\nNatural Color',
+            'Transparent 13x6 Customized Wig\nNatural Color',
+            'HD 13x4 Customized Wig\nNatural Color',
+            'Transparent 4x4 Customized Wig\n613 Color',
+            'Transparent 5x5 Customized Wig\n613 Color',
+            'Transparent 13x4 Customized Wig\n613 Color',
         ]);
+        // addHeader(table, ['Length',
+        //     'Transparent 4x4 Customized Wig\nNatural Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
+        //     'Transparent 5x5 Customized Wig\nNatural Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
+        //     'HD 4x4 Customized Wig\nNatural Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
+        //     'HD 5x5 Customized Wig\nNatural Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
+        //     'Transparent 13x4 Customized Wig\nNatural Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
+        //     'Transparent 13x6 Customized Wig\nNatural Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
+        //     'HD 13x4 Customized Wig\nNatural Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
+        //     'Transparent 4x4 Customized Wig\n613 Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
+        //     'Transparent 5x5 Customized Wig\n613 Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
+        //     'Transparent 13x4 Customized Wig\n613 Color\n(ST, BW) (LW, DW, Curly +$5)\n(KC +$14) (KKS +$23)',
+        // ]);
         for (var length in transparent_4x4_wig_price) {
             var closure_frontal_length = length;
             if (length > 20) {
@@ -269,7 +300,7 @@
         if (length < 14) {
             return bundle_price * 2 + closure_frontal_price + 25;
         }
-        
+
         return bundle_price * 3 + closure_frontal_price + 25;
     }
 

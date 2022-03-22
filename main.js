@@ -195,7 +195,7 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         totalAmount = totalAmount + otherFee;
     } else {
         if (is_us) {
-            shippingFee = 27 + Math.floor(weight / 500) * 10;
+            shippingFee = 28 + Math.floor(weight / 500) * 10;
         }
         else {
             shippingFee = 30 + Math.floor(weight / 500) * 10;

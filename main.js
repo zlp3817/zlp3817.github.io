@@ -234,6 +234,11 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         console.log('the total best payment is: $' + totalAmount2.toFixed(2) + '\n');
         output += 'the total best payment is: $' + totalAmount2.toFixed(2) + ' (Zelle)\n';
     }
+    else {
+        output += '\n';
+        console.log('the total best payment is: $' + totalAmount2.toFixed(2) + '\n');
+        output += 'the total best payment is: $' + totalAmount2.toFixed(2) + ' (Bank Transfer)\n';
+    }
 
     return output;
 }

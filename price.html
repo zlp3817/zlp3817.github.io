@@ -168,7 +168,7 @@
         $("#bundle").addClass("checked");
         var table = document.getElementById('table');
         clearTable(table);
-      
+
         addHeader(table, ['Length',
             'Natural Color',
             '613 Color']);
@@ -247,7 +247,7 @@
         $("#wig").addClass("checked");
         var table = document.getElementById('table');
         clearTable(table);
-        
+
         addHeader(table, ['Length',
             'Transparent 4x4 Customized Wig\nNatural Color\n200% Density',
             'Transparent 5x5 Customized Wig\nNatural Color\n200% Density',
@@ -285,9 +285,9 @@
             '$' + caculateWigPrice(bundle_price[length], transparent_13x4_price[closure_frontal_length], length),
             '$' + caculateWigPrice(bundle_price[length], transparent_13x6_price[closure_frontal_length], length),
             '$' + caculateWigPrice(bundle_price[length], hd_13x4_price[closure_frontal_length], length),
-            // '$' + caculateWigPrice(bundle_613_price[length], transparent_613_4x4_price[closure_frontal_length], length),
-            // '$' + caculateWigPrice(bundle_613_price[length], transparent_613_5x5_price[closure_frontal_length], length),
-            // '$' + caculateWigPrice(bundle_613_price[length], transparent_613_13x4_price[closure_frontal_length], length),
+                // '$' + caculateWigPrice(bundle_613_price[length], transparent_613_4x4_price[closure_frontal_length], length),
+                // '$' + caculateWigPrice(bundle_613_price[length], transparent_613_5x5_price[closure_frontal_length], length),
+                // '$' + caculateWigPrice(bundle_613_price[length], transparent_613_13x4_price[closure_frontal_length], length),
             ]);
         }
     }
@@ -297,11 +297,21 @@
             return 0;
         }
 
-        if (length < 14) {
-            return bundle_price * 2 + closure_frontal_price + 25;
+        var value = 0;
+        if (length > 20) {
+            value = bundle_price * 3 + closure_frontal_price + 25;
+        } else {
+            if (length < 14) {
+                value = bundle_price * 2 + closure_frontal_price + 25;
+            }
+            else {
+                value = bundle_price * 3 + closure_frontal_price + 25;
+            }
+            
+            value += 5;
         }
 
-        return bundle_price * 3 + closure_frontal_price + 25;
+        return value;
     }
 
     window.onload = function () {

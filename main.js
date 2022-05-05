@@ -227,17 +227,17 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
 
 
     output += '\n';
-    output += 'the total best payment is: $' + totalAmount.toFixed(2) + '\n';
+    output += 'the total best payment is: $' + totalAmount.toFixed(2);
 
     if (is_us) {
         output += '\n';
         console.log('the total best payment is: $' + totalAmount2.toFixed(2) + '\n');
-        output += 'the total best payment is: $' + totalAmount2.toFixed(2) + ' (Zelle)\n';
+        output += 'or $' + totalAmount2.toFixed(2) + ' (Zelle)\n';
     }
     else {
         output += '\n';
         console.log('the total best payment is: $' + totalAmount2.toFixed(2) + '\n');
-        output += 'the total best payment is: $' + totalAmount2.toFixed(2) + ' (Bank Transfer)\n';
+        output += 'or $' + totalAmount2.toFixed(2) + ' (Bank Transfer)\n';
     }
 
     return output;
@@ -333,7 +333,8 @@ function find_length_volume(text, list) {
     for (var keyword of hair_category) {
         content = content.replace(keyword, '');
     }
-    var numArr = content.match(/\d+/g);
+    // var numArr = content.match(/\d+/g);
+    var numArr = content.match(/\d+(\.\d)?/g);
     if (numArr) {
         var length = 0;
         var num = 1;

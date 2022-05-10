@@ -281,8 +281,11 @@ function unserialize(str) {
         if (line.length < 2) {
             continue;
         }
-
-        if (line.indexOf('total') >= 0) {
+      
+        if (line.indexOf('total') >= 0 ) {
+            continue;
+        }
+        else if (line.indexOf('or $') >= 0) {
             continue;
         }
         else {

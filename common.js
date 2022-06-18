@@ -1,4 +1,4 @@
-const hair_keyword = ['natural color', '613 color', 'shipping fee:', 'discount:', 'paypal fee:', 'making fee:'];
+const hair_keyword = ['natural color', '613 color', 'shipping fee:', 'discount:', 'paypal fee:', 'making fee:', 'made with'];
 const hair_type = ['bundle', 'closure', 'frontal', 'wig'];
 const hair_texture = ['straight', 'body wave', 'loose body wave', 'deep wave', 'water wave', 'curly', 'loose wave', 'kinky curly', 'kinky straight'];
 const hair_color = ['natural', '613', 'blond'];

@@ -128,9 +128,17 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
 
     } else {
         output += 'total: ' + count;
-        for (var key in dicCount) {
-            output += ', ' + dicCount[key] + ' ' + key + 's';
-        }
+
+        if (count > 1) {
+            for (var key in dicCount) {
+                if (dicCount[key] > 1) {
+                    output += ', ' + dicCount[key] + ' ' + key + 's';
+                }
+                else {
+                    output += ', ' + dicCount[key] + ' ' + key;
+                }
+            }
+        }  
 
         console.log('======================>totalAmount: ', totalAmount)
 

@@ -4,13 +4,13 @@ const hair_texture = ['straight', 'body wave', 'loose body wave', 'deep wave', '
 const hair_color = ['natural', '613', 'blond'];
 const closure_category = ['4x4', 'hd 4x4', '4x4 hd', 'hd 5x5', '5x5 hd', '5x5', '6x6', '7x7'];
 const frontal_category = ['13x4', 'hd 13x4', '13x4 hd', '13x6', '360'];
-const hair_length = ['10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30'];
+const hair_length = ['10', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30', '32', '34', '36', '38', '40'];
 const hair_weight = { 'bundle': 110, 'closure': 45, 'frontal': 125, 'wig': 225 };
 
 const dic_hd_category = { '4x4 hd': 'hd 4x4', '5x5 hd': 'hd 5x5', '13x4 hd': 'hd 13x4' };
 
 // straight, bodywave
-const bundle_price = { '10': 18, '12': 22, '14': 26, '16': 30, '18': 34, '20': 38, '22': 46, '24': 51, '26': 59, '28': 64, '30': 68 };
+const bundle_price = { '10': 18, '12': 22, '14': 26, '16': 30, '18': 34, '20': 38, '22': 46, '24': 51, '26': 59, '28': 64, '30': 68, '32': 78, '34': 86, '36': 98, '38': 104, '40': 109  };
 // loosebodywave, deepwave, waterwave, curly, loosewave
 const bundle_price2 = { '10': 19, '12': 23, '14': 27, '16': 31, '18': 35, '20': 39, '22': 47, '24': 52, '26': 60, '28': 65, '30': 69 };
 //kinkycurly

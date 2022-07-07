@@ -124,21 +124,19 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         }
         output += 'total: ' + wigCount + ' wigs';
 
-        console.log('======================>totalAmount with wig making fee: ', totalAmount + 25*wigCount)
+        console.log('======================>totalAmount with wig making fee: ', totalAmount + 25 * wigCount)
 
     } else {
         output += 'total: ' + count;
 
-        if (count > 1) {
-            for (var key in dicCount) {
-                if (dicCount[key] > 1) {
-                    output += ', ' + dicCount[key] + ' ' + key + 's';
-                }
-                else {
-                    output += ', ' + dicCount[key] + ' ' + key;
-                }
+        for (var key in dicCount) {
+            if (dicCount[key] > 1) {
+                output += ', ' + dicCount[key] + ' ' + key + 's';
             }
-        }  
+            else {
+                output += ', ' + dicCount[key] + ' ' + key;
+            }
+        }
 
         console.log('======================>totalAmount: ', totalAmount)
 
@@ -226,7 +224,7 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         output += 'paypal fee: $' + paypalFee + '\n';
         discount = 0;
         if (is_discount) {
-            discount = parseInt(totalAmount/100) * 5;
+            discount = parseInt(totalAmount / 100) * 5;
             output += 'discount: $' + discount + '\n';
         }
         totalAmount2 = totalAmount + shippingFee - discount;
@@ -289,8 +287,8 @@ function unserialize(str) {
         if (line.length < 2) {
             continue;
         }
-      
-        if (line.indexOf('total') >= 0 ) {
+
+        if (line.indexOf('total') >= 0) {
             continue;
         }
         else if (line.indexOf('or $') >= 0) {
@@ -375,20 +373,20 @@ function parse(str, is_us, is_wig, is_discount) {
             if (color == hair_color[2]) {
                 color = hair_color[1];
             }
-    
+
             if (texture == null) {
                 if (category != null) {
                     var hair = arrHair[arrHair.length - 1];
                     texture = hair.texture;
                 }
             }
-    
+
             if (texture != null) {
                 console.log('parse:', color, type, texture, category);
                 var hair = new Hair(color, type, texture, category);
                 arrHair.push(hair);
             }
-    
+
             var volume = find_length_volume(line, hair_length)
             if (volume[0] > 0) {
                 var length = volume[0];
@@ -398,12 +396,12 @@ function parse(str, is_us, is_wig, is_discount) {
                 hair.volume[length] = [price, number];
                 console.log('parse:', length, price, number);
             }
-    
+
         }
-    } catch(error) {
+    } catch (error) {
         console.error();
     }
-    
+
     return serialize(arrHair, [], is_us, is_wig, is_discount);
 }
 

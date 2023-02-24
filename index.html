@@ -22,7 +22,7 @@
             <div id="input" class="textarea" contenteditable="plaintext-only"></div>
             <div class="inside">
                 <input id="us" type="checkbox" readonly="true" checked=true>U.S.</input>
-                <input id="wig" type="checkbox" readonly="true">Customized</input> 
+                <!-- <input id="wig" type="checkbox" readonly="true">Customized</input>  -->
                 <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
                 <input id="discount" type="checkbox" readonly="true">Discount</input>
             </div>
@@ -91,7 +91,8 @@
         console.log('text:', text);
         if (text.length > 0) {
             var is_us = document.getElementById('us').checked;
-            var is_wig = document.getElementById('wig').checked;
+            // var is_wig = document.getElementById('wig').checked;
+            var is_wig = false;
             var is_discount = document.getElementById('discount').checked;
             document.getElementById('output').innerText = parse(text, is_us, is_wig, is_discount);
             document.getElementById('output').style.visibility = 'visible';
@@ -103,7 +104,8 @@
     function OnUpdate() {
         var arrStr = unserialize(document.getElementById('output').innerText);
         var is_us = document.getElementById('us').checked;
-        var is_wig = document.getElementById('wig').checked;
+        // var is_wig = document.getElementById('wig').checked;
+        var is_wig = false;
         var is_discount = document.getElementById('discount').checked;
         document.getElementById('output').innerText = serialize(arrStr[0], arrStr[1], is_us, is_wig, is_discount);
         $('<div>').appendTo('body').addClass('alert').html('已更新').show().delay(1200).fadeOut();

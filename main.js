@@ -84,7 +84,8 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
     var weight = 0;
     var wigCount = 0;
     var totalAmount = 0;
-    var totalAmount2 = 0;
+    var totalPrice = 0;
+    var zellePrice = 0;
     var dicCount = new Array();
 
     for (const hair of arrHair) {
@@ -93,6 +94,7 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         } else {
             if (hair_type[3] == hair.type) {
                 output += hair.texture + ' ' + hair.category + ' ' + get_hair_type(hair.category) + ' ' + hair.type + ' ' + hair.color + ' color\n';
+                output += '( made with 3 bundles + 1 ' + get_hair_type(hair.category) + ' )\n'; 
             }
             else {
                 output += hair.texture + ' ' + get_hair_type2(hair.category) + ' ' + hair.type + ' ' + hair.color + ' color\n';
@@ -161,12 +163,11 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
                 otherFee += dicFee[key];
             }
         }
-        totalAmount2 = totalAmount + otherFee;
 
-        var paypalFee = (totalAmount + otherFee) * 0.05;
+        var paypalFee = Math.ceil((totalAmount + otherFee) * 0.05);
         for (var key in dicFee) {
             if (key.indexOf('paypal') >= 0) {
-                dicFee[key] = Math.ceil(paypalFee);
+                dicFee[key] = paypalFee;
                 console.log('paypal fee:', dicFee[key]);
                 break;
             }
@@ -181,14 +182,21 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         //     }
         // }
 
-        otherFee = 0;
+        totalFee = 0;
         for (var key in dicFee) {
             output += key + '$' + dicFee[key] + '\n';
             if (key.indexOf('discount') >= 0) {
-                otherFee -= dicFee[key];
-                totalAmount2 -= dicFee[key];
+                totalFee -= dicFee[key];
             } else {
-                otherFee += dicFee[key];
+                totalFee += dicFee[key];
+            }
+        }
+
+        var discount = 0
+        if (is_discount) {
+            if (key.indexOf('discount') < 0) {
+                discount = parseInt(totalAmount / 100) * 5;
+                output += 'discount: $' + discount + '\n';
             }
         }
 
@@ -197,8 +205,9 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         //         output += 'discount: $' + discount + '\n';
         //     }
         // }
-
-        totalAmount = totalAmount + otherFee;
+        // console.log
+        totalPrice = totalAmount + otherFee - discount + paypalFee;
+        zellePrice = totalAmount + otherFee - discount;
     } else {
         if (is_us) {
             shippingFee = 28 + Math.floor(weight / 500) * 10;
@@ -227,23 +236,23 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
             discount = parseInt(totalAmount / 100) * 5;
             output += 'discount: $' + discount + '\n';
         }
-        totalAmount2 = totalAmount + shippingFee - discount;
-        totalAmount = totalAmount + shippingFee + paypalFee - discount;
+        totalPrice = totalAmount + shippingFee + paypalFee - discount;
+        zellePrice = totalAmount + shippingFee - discount;
     }
 
 
     output += '\n';
-    output += 'the total best payment is: $' + totalAmount.toFixed(2);
+    output += 'the total best payment is: $' + totalPrice.toFixed(2);
 
     if (is_us) {
         output += '\n';
-        console.log('the total best payment is: $' + totalAmount2.toFixed(2) + '\n');
-        output += 'or $' + totalAmount2.toFixed(2) + ' (Zelle)\n';
+        console.log('the total best payment is: $' + zellePrice.toFixed(2) + '\n');
+        output += 'or $' + zellePrice.toFixed(2) + ' (Zelle)\n';
     }
     else {
         output += '\n';
-        console.log('the total best payment is: $' + totalAmount2.toFixed(2) + '\n');
-        output += 'or $' + totalAmount2.toFixed(2) + ' (Bank Transfer)\n';
+        console.log('the total best payment is: $' + zellePrice.toFixed(2) + '\n');
+        output += 'or $' + zellePrice.toFixed(2) + ' (Bank Transfer)\n';
     }
 
     return output;
@@ -258,8 +267,11 @@ function unserialize(str) {
     var arrStr = text.match(/[^\r\n]+/g);
     for (const line of arrStr) {
         console.log('line:', line);
+        if (line.indexOf('made with') >= 0) {
+            continue;
+        }
         var texture = find_hair_keyword(line, hair_texture);
-        var type = find_hair_keyword(line, hair_type);
+        var type = find_hair_keyword(line, hair_type, true);
         var category = find_hair_keyword(line, closure_category.concat(frontal_category));
         var color = find_hair_keyword(line, hair_color);
 
@@ -331,6 +343,10 @@ function find_hair_keyword(text, list, is_type = false) {
         return arrName.sort(function (a, b) {
             return b.length - a.length;
         })[0];
+    } else if (arrName.length == 0) {
+        if (is_type) {
+            return list[0];
+        }
     }
 
     return null;

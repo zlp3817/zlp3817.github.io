@@ -183,21 +183,23 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         // }
 
         totalFee = 0;
+        var discount = 0
         for (var key in dicFee) {
             output += key + '$' + dicFee[key] + '\n';
             if (key.indexOf('discount') >= 0) {
-                totalFee -= dicFee[key];
+                discount = dicFee[key];
             } else {
                 totalFee += dicFee[key];
             }
         }
 
-        var discount = 0
         if (is_discount) {
             if (key.indexOf('discount') < 0) {
                 discount = parseInt(totalAmount / 100) * 5;
                 output += 'discount: $' + discount + '\n';
             }
+        } else {
+            discount = 0;
         }
 
         // if (output.indexOf('discount') < 0) {
@@ -205,8 +207,8 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         //         output += 'discount: $' + discount + '\n';
         //     }
         // }
-        // console.log
-        totalPrice = totalAmount + otherFee - discount + paypalFee;
+        console.log(totalAmount, otherFee, paypalFee, discount)
+        totalPrice = totalAmount + otherFee + paypalFee - discount
         zellePrice = totalAmount + otherFee - discount;
     } else {
         if (is_us) {

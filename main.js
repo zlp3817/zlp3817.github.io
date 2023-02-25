@@ -8,7 +8,7 @@ function get_hair_type(category) {
         return hair_type[2];
     }
 
-    return null;
+    return hair_type[0];
 }
 
 function get_hair_type2(type) {
@@ -345,10 +345,6 @@ function find_hair_keyword(text, list, is_type = false) {
         return arrName.sort(function (a, b) {
             return b.length - a.length;
         })[0];
-    } else if (arrName.length == 0) {
-        if (is_type) {
-            return list[0];
-        }
     }
 
     return null;

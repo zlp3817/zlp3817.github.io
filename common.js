@@ -54,6 +54,13 @@ const transparent_613_4x4_price = { '10': 0, '12': 49, '14': 52, '16': 55, '18':
 const transparent_613_5x5_price = { '10': 0, '12': 56, '14': 58, '16': 62, '18': 68, '20': 72 };
 const transparent_613_13x4_price = { '10': 0, '12': 78, '14': 82, '16': 87, '18': 93, '20': 102 };
 
+const us_shipping_cost = 28;
+const eu_shipping_cost = 30;
+const shipping_unit = 10
+const wig_making_cost = 25;
+
+const is_invoice = true;
+
 const hair_price = {
     'natural':
     {

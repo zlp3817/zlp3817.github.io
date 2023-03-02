@@ -154,7 +154,7 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
 
     console.log('dicFee:', dicFee);
     //判断是output还是update
-    if (Object.keys(dicFee).length > 0) {
+    if (Object.keys(dicFee).length > 0 && is_invoice) {
         var otherFee = 0;
         for (var key in dicFee) {
             if (key.indexOf('discount') >= 0 || key.indexOf('paypal') >= 0) {
@@ -202,15 +202,15 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
             discount = 0;
         }
 
-        // if (output.indexOf('discount') < 0) {
-        //     if (is_discount) {
-        //         output += 'discount: $' + discount + '\n';
-        //     }
-        // }
-        console.log(totalAmount, otherFee, paypalFee, discount)
         totalPrice = totalAmount + otherFee + paypalFee - discount
         zellePrice = totalAmount + otherFee - discount;
     } else {
+        if (is_wig) {
+            var wigMakingFee = wig_making_cost * wigCount;
+            output += 'wig making fee: $' + wigMakingFee + '\n';
+            totalAmount += wigMakingFee;
+        }
+
         if (is_us) {
             shippingFee = us_shipping_cost + Math.floor(weight / 500) * shipping_unit;
         }
@@ -219,43 +219,47 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         }
 
         if (count > 40) {
-            shippingFee += 20;
+            shippingFee += shipping_unit*2;
         }
-
-
-        if (is_wig) {
-            var wigMakingFee = wig_making_cost * wigCount;
-            output += 'wig making fee: $' + wigMakingFee + '\n';
-            totalAmount += wigMakingFee;
-        }
-
         output += 'shipping fee: $' + shippingFee + '\n';
-        var paypalFee = (totalAmount + shippingFee) * 0.05;
-        paypalFee = Math.ceil(paypalFee);
-        output += 'paypal fee: $' + paypalFee + '\n';
-        discount = 0;
-        if (is_discount) {
-            discount = parseInt(totalAmount / 100) * 5;
-            output += 'discount: $' + discount + '\n';
+
+        if (is_invoice) {
+            var paypalFee = (totalAmount + shippingFee) * 0.05;
+            paypalFee = Math.ceil(paypalFee);
+            output += 'paypal fee: $' + paypalFee + '\n';
+            discount = 0;
+            if (is_discount) {
+                discount = parseInt(totalAmount / 100) * 5;
+                output += 'discount: $' + discount + '\n';
+            }
+            totalPrice = totalAmount + shippingFee + paypalFee - discount;
+            zellePrice = totalAmount + shippingFee - discount;
+        } else {
+            totalPrice = totalAmount + shippingFee;
         }
-        totalPrice = totalAmount + shippingFee + paypalFee - discount;
-        zellePrice = totalAmount + shippingFee - discount;
+        
     }
 
 
-    output += '\n';
-    output += 'the total best payment is: $' + totalPrice.toFixed(2);
-
-    if (is_us) {
+    if (is_invoice) {
         output += '\n';
-        console.log('the total best payment is: $' + zellePrice.toFixed(2) + '\n');
-        output += 'or $' + zellePrice.toFixed(2) + ' (Zelle)\n';
-    }
-    else {
+        output += 'the total best payment is: $' + totalPrice.toFixed(2);
+
+        if (is_us) {
+            output += '\n';
+            console.log('the total best payment is: $' + zellePrice.toFixed(2) + '\n');
+            output += 'or $' + zellePrice.toFixed(2) + ' (Zelle)\n';
+        }
+        else {
+            output += '\n';
+            console.log('the total best payment is: $' + zellePrice.toFixed(2) + '\n');
+            output += 'or $' + zellePrice.toFixed(2) + ' (Bank Transfer)\n';
+        }
+    } else {
         output += '\n';
-        console.log('the total best payment is: $' + zellePrice.toFixed(2) + '\n');
-        output += 'or $' + zellePrice.toFixed(2) + ' (Bank Transfer)\n';
-    }
+        output += 'the total best payment is: ¥' + totalPrice.toFixed(2);
+    } 
+    
 
     return output;
 }

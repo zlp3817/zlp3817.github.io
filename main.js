@@ -212,10 +212,10 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         zellePrice = totalAmount + otherFee - discount;
     } else {
         if (is_us) {
-            shippingFee = 28 + Math.floor(weight / 500) * 10;
+            shippingFee = us_shipping_cost + Math.floor(weight / 500) * shipping_unit;
         }
         else {
-            shippingFee = 30 + Math.floor(weight / 500) * 10;
+            shippingFee = eu_shipping_cost + Math.floor(weight / 500) * shipping_unit;
         }
 
         if (count > 40) {
@@ -224,7 +224,7 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
 
 
         if (is_wig) {
-            var wigMakingFee = 25 * wigCount;
+            var wigMakingFee = wig_making_cost * wigCount;
             output += 'wig making fee: $' + wigMakingFee + '\n';
             totalAmount += wigMakingFee;
         }

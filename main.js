@@ -55,16 +55,33 @@ function Hair(color, type, texture, category) {
 
     this.price = function (length) {
         if (null == this.category) {
-            return hair_price[this.color][this.type][this.texture][length];
+            if (this.texture == hair_texture[2] || this.texture == hair_texture[3] || this.texture == hair_texture[4] || this.texture == hair_texture[5]  || this.texture == hair_texture[6]) {
+                return hair_price[this.color][this.type][length] + 1;
+            } else if (this.texture == hair_texture[7]) {
+                return hair_price[this.color][this.type][length] + 4;
+            }  else if (this.texture == hair_texture[8]) {
+                return hair_price[this.color][this.type][length] + 5;
+            } 
+            return hair_price[this.color][this.type][length];
+
         }
-        var per_price = 0;
+
         try {
-            per_price = hair_price[this.color][this.type][this.category][this.texture][length];
+            if (this.type == hair_type[1] || this.type == hair_type[2]) {
+                if (this.texture == hair_texture[2] || this.texture == hair_texture[3] || this.texture == hair_texture[4] || this.texture == hair_texture[5]  || this.texture == hair_texture[6]) {
+                    return hair_price[this.color][this.type][this.category][length] + 2;
+                } else if (this.texture == hair_texture[7] || this.texture == hair_texture[8]) {
+                    return hair_price[this.color][this.type][this.category][length] + 5;
+                }
+            }
+
+            return hair_price[this.color][this.type][this.category][length];
+
         } catch (error) {
             console.log('hair_price[' + this.color + '][' + this.type + '][' + this.category + '][' + this.texture + '][' + length + ']');
             console.log(error);
         }
-        return per_price;
+        return 0;
     };
     this.count = function () {
         var count = 0;
@@ -78,7 +95,7 @@ function Hair(color, type, texture, category) {
     }
 }
 //序列化
-function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
+function serialize(arrHair, dicFee, is_us, is_paypal, is_discount) {
     var output = '';
     var count = 0;
     var weight = 0;
@@ -117,32 +134,19 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         }
     }
 
-    output += '[--';
-    if (is_wig) {
-        for (var key in dicCount) {
-            if (hair_type.indexOf(key) == 1 || hair_type.indexOf(key) == 2) {
-                wigCount += dicCount[key];
-            }
+    output += '[--total: ' + count;
+
+    for (var key in dicCount) {
+        if (dicCount[key] > 1) {
+            output += ', ' + dicCount[key] + ' ' + key + 's';
         }
-        output += 'total: ' + wigCount + ' wigs';
-
-        console.log('======================>totalAmount with wig making fee: ', totalAmount + 25 * wigCount)
-
-    } else {
-        output += 'total: ' + count;
-
-        for (var key in dicCount) {
-            if (dicCount[key] > 1) {
-                output += ', ' + dicCount[key] + ' ' + key + 's';
-            }
-            else {
-                output += ', ' + dicCount[key] + ' ' + key;
-            }
+        else {
+            output += ', ' + dicCount[key] + ' ' + key;
         }
-
-        console.log('======================>totalAmount: ', totalAmount)
-
     }
+
+    console.log('======================>totalAmount: ', totalAmount)
+
 
 
     // output += '-weight: ' + weight / 1000 + 'kg--]\n';
@@ -164,6 +168,7 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
             }
         }
 
+      
         var paypalFee = Math.ceil((totalAmount + otherFee) * 0.05);
         for (var key in dicFee) {
             if (key.indexOf('paypal') >= 0) {
@@ -172,16 +177,7 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
                 break;
             }
         }
-
-        // for (var key in dicFee) {
-        //     if (key.indexOf('discount') >= 0) {
-        //         var discount = Math.floor(dicFee[key]);
-        //         dicFee[key] = Number(discount.toFixed(2));
-        //         console.log('discount fee:', dicFee[key]);
-        //         break;
-        //     }
-        // }
-
+  
         totalFee = 0;
         var discount = 0
         for (var key in dicFee) {
@@ -205,18 +201,7 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         totalPrice = totalAmount + otherFee + paypalFee - discount
         zellePrice = totalAmount + otherFee - discount;
     } else {
-        if (is_wig) {
-            var wigMakingFee = wig_making_cost * wigCount;
-            output += 'wig making fee: $' + wigMakingFee + '\n';
-            totalAmount += wigMakingFee;
-        }
-
-        if (is_us) {
-            shippingFee = us_shipping_cost + Math.floor(weight / 500) * shipping_unit;
-        }
-        else {
-            shippingFee = eu_shipping_cost + Math.floor(weight / 500) * shipping_unit;
-        }
+        shippingFee = shipping_cost + Math.floor(weight / 500) * shipping_unit;
 
         if (count > 40) {
             shippingFee += shipping_unit*2;
@@ -226,7 +211,9 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
         if (is_invoice) {
             var paypalFee = (totalAmount + shippingFee) * 0.05;
             paypalFee = Math.ceil(paypalFee);
-            output += 'paypal fee: $' + paypalFee + '\n';
+            if (is_paypal) {
+                output += 'paypal fee: $' + paypalFee + '\n';
+            }
             discount = 0;
             if (is_discount) {
                 discount = parseInt(totalAmount / 100) * 5;
@@ -243,18 +230,30 @@ function serialize(arrHair, dicFee, is_us, is_wig, is_discount) {
 
     if (is_invoice) {
         output += '\n';
-        output += 'the total best payment is: $' + totalPrice.toFixed(2);
+        if (is_paypal) {
+            output += 'the total best payment is: $' + totalPrice.toFixed(2);
+            if (is_us) {
+                output += '\n';
+                console.log('the total best payment is: $' + zellePrice.toFixed(2) + '\n');
+                output += 'or $' + zellePrice.toFixed(2) + ' (Zelle)\n';
+            }
+            else {
+                output += '\n';
+                console.log('the total best payment is: $' + zellePrice.toFixed(2) + '\n');
+                output += 'or $' + zellePrice.toFixed(2) + ' (Bank Transfer)\n';
+            }
+        } else {
+            if (is_us) {
+                output += 'the total best payment is: $' + zellePrice.toFixed(2) + ' (Zelle)\n';
+                console.log('the total best payment is: $' + zellePrice.toFixed(2) + '\n');
+            }
+            else {
+                output += 'the total best payment is: $' + zellePrice.toFixed(2) + ' (Bank Transfer)\n';
+                console.log('the total best payment is: $' + zellePrice.toFixed(2) + '\n');
+            }
+        }
 
-        if (is_us) {
-            output += '\n';
-            console.log('the total best payment is: $' + zellePrice.toFixed(2) + '\n');
-            output += 'or $' + zellePrice.toFixed(2) + ' (Zelle)\n';
-        }
-        else {
-            output += '\n';
-            console.log('the total best payment is: $' + zellePrice.toFixed(2) + '\n');
-            output += 'or $' + zellePrice.toFixed(2) + ' (Bank Transfer)\n';
-        }
+        
     } else {
         output += '\n';
         output += 'the total best payment is: ¥' + totalPrice.toFixed(2);
@@ -376,7 +375,7 @@ function find_length_volume(text, list) {
     return [length, num];
 }
 //解析
-function parse(str, is_us, is_wig, is_discount) {
+function parse(str, is_us, is_paypal, is_discount) {
     var arrHair = [];
     try {
         var arrStr = str.match(/[^\r\n]+/g);
@@ -420,7 +419,7 @@ function parse(str, is_us, is_wig, is_discount) {
         console.error();
     }
 
-    return serialize(arrHair, [], is_us, is_wig, is_discount);
+    return serialize(arrHair, [], is_us, is_paypal, is_discount);
 }
 
 function init() {

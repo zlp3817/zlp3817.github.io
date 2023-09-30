@@ -22,7 +22,7 @@
             <div id="input" class="textarea" contenteditable="plaintext-only"></div>
             <div class="inside">
                 <input id="us" type="checkbox" readonly="true" checked=true>U.S.</input>
-                <!-- <input id="wig" type="checkbox" readonly="true">Customized</input>  -->
+                <input id="paypal" type="checkbox" readonly="true">Paypal</input> 
                 <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
                 <input id="discount" type="checkbox" readonly="true">Discount</input>
             </div>
@@ -92,9 +92,9 @@
         if (text.length > 0) {
             var is_us = document.getElementById('us').checked;
             // var is_wig = document.getElementById('wig').checked;
-            var is_wig = false;
+            var is_paypal = document.getElementById('paypal').checked;
             var is_discount = document.getElementById('discount').checked;
-            document.getElementById('output').innerText = parse(text, is_us, is_wig, is_discount);
+            document.getElementById('output').innerText = parse(text, is_us, is_paypal, is_discount);
             document.getElementById('output').style.visibility = 'visible';
             $('<div>').appendTo('body').addClass('alert').html('已输出').show().delay(1200).fadeOut();
         }

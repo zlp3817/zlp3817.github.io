@@ -159,6 +159,7 @@ function serialize(arrHair, dicFee, is_us, is_paypal, is_discount) {
     console.log('dicFee:', dicFee);
     //判断是output还是update
     if (Object.keys(dicFee).length > 0 && is_invoice) {
+        //output
         var otherFee = 0;
         for (var key in dicFee) {
             if (key.indexOf('discount') >= 0 || key.indexOf('paypal') >= 0) {
@@ -170,14 +171,19 @@ function serialize(arrHair, dicFee, is_us, is_paypal, is_discount) {
 
       
         var paypalFee = Math.ceil((totalAmount + otherFee) * 0.05);
-        for (var key in dicFee) {
-            if (key.indexOf('paypal') >= 0) {
-                dicFee[key] = paypalFee;
-                console.log('paypal fee:', dicFee[key]);
-                break;
-            }
+        if (is_paypal) {
+            dicFee['paypal fee: '] = paypalFee;
+            console.log('paypal fee:', paypalFee);
         }
+        // for (var key in dicFee) {
+        //     if (key.indexOf('paypal') >= 0) {
+        //         dicFee[key] = paypalFee;
+        //         console.log('paypal fee:', dicFee[key]);
+        //         break;
+        //     }
+        // }
   
+
         totalFee = 0;
         var discount = 0
         for (var key in dicFee) {

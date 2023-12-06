@@ -40,7 +40,7 @@ const hd_613_13x6_price = { '10': 0, '12': 82, '14': 88, '16': 98, '18': 108, '2
 const shipping_cost = 25;
 const shipping_unit = 10
 const wig_making_cost = 25;
-
+//美元报价
 const is_invoice = true;
 
 const hair_price = {

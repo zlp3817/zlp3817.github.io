@@ -105,13 +105,13 @@
         var arrStr = unserialize(document.getElementById('output').innerText);
         var is_us = document.getElementById('us').checked;
         // var is_wig = document.getElementById('wig').checked;
-        var is_wig = false;
+        var is_paypal = document.getElementById('paypal').checked;
         var is_discount = document.getElementById('discount').checked;
-        document.getElementById('output').innerText = serialize(arrStr[0], arrStr[1], is_us, is_wig, is_discount);
+        document.getElementById('output').innerText = serialize(arrStr[0], arrStr[1], is_us, is_paypal, is_discount);
         $('<div>').appendTo('body').addClass('alert').html('已更新').show().delay(1200).fadeOut();
     }
     //复制
-    function OnCopy() {
+    function OnCopy() { 
         var copyText = document.getElementById('output').innerText;
         if (copyText.length > 0) {
             var textArea = document.createElement("textarea");
